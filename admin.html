@@ -66,7 +66,7 @@
         🎬 영상 순서 & 홈 고정 관리
       </button>
       <button onclick="switchTab('tabCategories')" id="btnTabCategories" class="tab-btn text-slate-400 hover:text-slate-700 py-3.5 transition">
-        📁 카테고리 관리
+        📁 카테고리 관리 & 노출 설정
       </button>
     </div>
   </header>
@@ -81,9 +81,7 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          유튜브 링크 <span class="text-sky-600 font-normal text-xs">* 링크 입력 후 바깥을 클릭하거나 버튼을 누르세요.</span>
-        </label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">유튜브 링크</label>
         <div class="relative">
           <input type="text" id="videoUrl" onblur="fetchYouTubeMeta()" placeholder="https://youtu.be/... 또는 https://www.youtube.com/watch?v=..." 
             class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
@@ -100,9 +98,7 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          영상 제목 <span class="text-slate-400 font-normal text-xs">(자동 생성 후 수정 가능)</span>
-        </label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">영상 제목</label>
         <input type="text" id="videoTitle" oninput="updateShareMsgPreview()" placeholder="유튜브 링크를 넣으면 자동으로 채워집니다." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
       </div>
@@ -131,15 +127,13 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">다운로드 링크 (선택: 구글 드라이브 / MP4 직링크)</label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">다운로드 링크 (선택)</label>
         <input type="text" id="downloadUrl" placeholder="https://drive.google.com/..." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          원장님 전송용 메시지 <span class="text-sky-600 font-normal text-xs">* 제목에 맞춰 자동 작성되며, 필요 시 직접 수정할 수 있습니다.</span>
-        </label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">원장님 전송용 메시지</label>
         <textarea id="shareMsg" rows="2" placeholder="원장님, 문의주신 영상 공유드립니다." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500"></textarea>
       </div>
@@ -173,11 +167,13 @@
       </div>
     </section>
 
-    <!-- 탭 3: 카테고리 관리 -->
+    <!-- 탭 3: 카테고리 관리 (노출/숨김 기능 포함) -->
     <section id="tabCategories" class="hidden max-w-4xl bg-white p-10 rounded-3xl border border-slate-200 shadow-sm space-y-6">
       <div>
-        <h3 class="text-xl font-bold text-slate-900">카테고리 관리</h3>
-        <p class="text-sm text-slate-500 mt-0.5">카테고리를 추가하거나 드래그 앤 드롭으로 탭 순서를 변경합니다.</p>
+        <h3 class="text-xl font-bold text-slate-900">카테고리 관리 & 노출 제어</h3>
+        <p class="text-sm text-slate-500 mt-0.5">
+          카테고리를 삭제하지 않고 <span class="font-semibold text-sky-600">[숨김] 처리하여 메인 화면 상단 탭에서 가릴 수 있습니다.</span>
+        </p>
       </div>
 
       <div class="flex gap-3">
@@ -272,8 +268,13 @@
   </div>
 
   <script>
-    const defaultCategories = [
-      "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"
+    const defaultRawCategories = [
+      { name: "신제품", isVisible: true },
+      { name: "임플란트 솔루션", isVisible: true },
+      { name: "디지털 솔루션", isVisible: true },
+      { name: "바이오레이즈 솔루션", isVisible: true },
+      { name: "엔도 솔루션", isVisible: true },
+      { name: "장비 및 재료·재생", isVisible: true }
     ];
 
     const initialVideos = [
@@ -339,7 +340,18 @@
       }
     ];
 
-    let categories = JSON.parse(localStorage.getItem('megagen_categories')) || defaultCategories;
+    // 카테고리 데이터 마이그레이션 (문자열 배열 ➔ 객체 배열 호환)
+    let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
+    let categories = [];
+    if (!savedCats) {
+      categories = defaultRawCategories;
+    } else {
+      categories = savedCats.map(c => {
+        if (typeof c === 'string') return { name: c, isVisible: true };
+        return { name: c.name, isVisible: c.isVisible !== false };
+      });
+    }
+
     let videos = JSON.parse(localStorage.getItem('megagen_videos')) || initialVideos;
 
     let videoSortableInstance = null;
@@ -563,8 +575,10 @@
       sel.innerHTML = "";
       editSel.innerHTML = "";
       categories.forEach(cat => {
-        sel.innerHTML += `<option value="${cat}">${cat}</option>`;
-        editSel.innerHTML += `<option value="${cat}">${cat}</option>`;
+        const catName = cat.name;
+        const note = cat.isVisible ? "" : " (숨김 상태)";
+        sel.innerHTML += `<option value="${catName}">${catName}${note}</option>`;
+        editSel.innerHTML += `<option value="${catName}">${catName}${note}</option>`;
       });
     }
 
@@ -573,9 +587,11 @@
       const currentVal = sel.value;
       sel.innerHTML = `<option value="전체">전체 카테고리 (글로벌 순서)</option>`;
       categories.forEach(cat => {
-        sel.innerHTML += `<option value="${cat}">${cat} 내부 순서</option>`;
+        const note = cat.isVisible ? "" : " [숨김]";
+        sel.innerHTML += `<option value="${cat.name}">${cat.name}${note} 내부 순서</option>`;
       });
-      if (categories.includes(currentVal)) {
+      const names = categories.map(c => c.name);
+      if (names.includes(currentVal)) {
         sel.value = currentVal;
       }
     }
@@ -796,22 +812,31 @@
       localStorage.setItem('megagen_videos', JSON.stringify(videos));
     }
 
+    // 카테고리 관리 목록 렌더링 (노출/숨김 토글 버튼 포함)
     function renderCategoryList() {
       const container = document.getElementById('categoryListContainer');
       container.innerHTML = "";
 
       categories.forEach((cat, idx) => {
+        const isVis = cat.isVisible !== false;
         container.innerHTML += `
-          <div class="category-item p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-4 transition hover:border-slate-300" data-cat="${cat}">
+          <div class="category-item p-4 ${isVis ? 'bg-slate-50 border-slate-200' : 'bg-slate-100/60 border-dashed border-slate-300 opacity-75'} border rounded-2xl flex items-center justify-between gap-4 transition hover:border-slate-300" data-cat="${cat.name}">
             <div class="flex items-center gap-4">
               <div class="drag-handle-cat text-slate-400 hover:text-sky-600 p-1 flex items-center justify-center cursor-grab" title="마우스로 끌어서 순서 이동">
                 <i class="fa-solid fa-grip-vertical text-base"></i>
               </div>
               <span class="cat-index-badge text-slate-400 font-mono font-bold text-sm w-6 text-center">${idx + 1}</span>
-              <span class="text-sm font-bold text-slate-800">${cat}</span>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-bold ${isVis ? 'text-slate-800' : 'text-slate-500 line-through decoration-slate-400'}">${cat.name}</span>
+                ${!isVis ? `<span class="text-[10px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-semibold">홈에서 숨김</span>` : ''}
+              </div>
             </div>
 
             <div class="flex items-center gap-2">
+              <!-- 노출 / 숨김 토글 버튼 -->
+              <button onclick="toggleCategoryVisibility(${idx})" title="메인 화면 상단 탭 노출/숨김" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition flex items-center gap-1.5 ${isVis ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100' : 'bg-slate-200 text-slate-600 border-slate-300 hover:bg-slate-300'}">
+                <i class="fa-solid ${isVis ? 'fa-eye' : 'fa-eye-slash'}"></i> ${isVis ? '노출 중' : '숨김'}
+              </button>
               <button onclick="editCategory(${idx})" title="이름 수정" class="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100">
                 수정
               </button>
@@ -832,7 +857,9 @@
           const itemElements = container.querySelectorAll('.category-item');
           const newCats = [];
           itemElements.forEach((el, index) => {
-            newCats.push(el.dataset.cat);
+            const catName = el.dataset.cat;
+            const found = categories.find(c => c.name === catName);
+            if (found) newCats.push(found);
             const badge = el.querySelector('.cat-index-badge');
             if (badge) badge.innerText = index + 1;
           });
@@ -843,6 +870,15 @@
       });
     }
 
+    // 카테고리 숨김/노출 토글
+    function toggleCategoryVisibility(idx) {
+      categories[idx].isVisible = !categories[idx].isVisible;
+      saveCategories();
+      renderCategoryList();
+      renderCategoryOptions();
+      populateManageCategoryFilter();
+    }
+
     function addCategory() {
       const input = document.getElementById('newCategoryName');
       const val = input.value.trim();
@@ -850,19 +886,21 @@
         alert("카테고리 이름을 입력해주세요.");
         return;
       }
-      if (categories.includes(val)) {
+      if (categories.some(c => c.name === val)) {
         alert("이미 존재하는 카테고리입니다.");
         return;
       }
-      categories.push(val);
+      categories.push({ name: val, isVisible: true });
       saveCategories();
       input.value = "";
       renderCategoryList();
+      renderCategoryOptions();
+      populateManageCategoryFilter();
       alert(`'${val}' 카테고리가 추가되었습니다.`);
     }
 
     function editCategory(idx) {
-      const current = categories[idx];
+      const current = categories[idx].name;
       const newVal = prompt("수정할 카테고리 이름을 입력하세요:", current);
       if (!newVal || newVal.trim() === "" || newVal.trim() === current) return;
 
@@ -870,29 +908,23 @@
       videos.forEach(v => {
         if (v.category === current) v.category = trimmed;
       });
-      categories[idx] = trimmed;
+      categories[idx].name = trimmed;
       saveCategories();
       saveVideos();
       renderCategoryList();
+      renderCategoryOptions();
+      populateManageCategoryFilter();
     }
 
     function deleteCategory(idx) {
-      const target = categories[idx];
-      if (confirm(`'${target}' 카테고리를 삭제하시겠습니까?`)) {
+      const target = categories[idx].name;
+      if (confirm(`'${target}' 카테고리를 완전히 삭제하시겠습니까?\n(메인 화면에서 가리기만 원하실 경우 '숨김' 버튼을 이용하세요)`)) {
         categories.splice(idx, 1);
         saveCategories();
         renderCategoryList();
+        renderCategoryOptions();
+        populateManageCategoryFilter();
       }
-    }
-
-    function moveCategory(idx, dir) {
-      const target = idx + dir;
-      if (target < 0 || target >= categories.length) return;
-      const tmp = categories[idx];
-      categories[idx] = categories[target];
-      categories[target] = tmp;
-      saveCategories();
-      renderCategoryList();
     }
 
     function saveCategories() {
