@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <!-- 관리 3대 탭 메뉴 (text-base 크기 확대) -->
+    <!-- 관리 3대 탭 메뉴 -->
     <div class="max-w-7xl mx-auto px-8 flex gap-8 text-base font-semibold border-t border-slate-100">
       <button onclick="switchTab('tabRegister')" id="btnTabRegister" class="tab-btn text-sky-600 border-b-2 border-sky-600 py-3.5 transition">
         + 영상 등록
@@ -72,18 +72,18 @@
     <section id="tabRegister" class="max-w-3xl bg-white p-10 rounded-3xl border border-slate-200 shadow-sm space-y-6">
       <div>
         <h3 class="text-xl font-bold text-slate-900">새 영상 콘텐츠 등록</h3>
-        <p class="text-sm text-slate-500 mt-1">유튜브 링크를 넣으면 썸네일과 원본 영상 제목을 자동으로 가져옵니다.</p>
+        <p class="text-sm text-slate-500 mt-1">유튜브 링크를 입력하면 제목과 썸네일을 자동으로 가져옵니다.</p>
       </div>
 
-      <!-- 유튜브 링크 (먼저 입력 시 제목/썸네일 자동 조회) -->
+      <!-- 유튜브 링크 입력란 -->
       <div>
         <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          유튜브 링크 (일반/단축/임베드 모두 지원) <span class="text-sky-600 font-normal text-xs">* 링크 입력 후 포커스를 벗어나면 제목을 자동 수집합니다.</span>
+          유튜브 링크 <span class="text-sky-600 font-normal text-xs">* 링크 입력 후 [제목 가져오기]를 누르거나 바깥을 클릭하세요.</span>
         </label>
         <div class="relative">
           <input type="text" id="videoUrl" onblur="fetchYouTubeMeta()" placeholder="https://youtu.be/... 또는 https://www.youtube.com/watch?v=..." 
             class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
-          <button type="button" onclick="fetchYouTubeMeta()" class="absolute right-2.5 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold">
+          <button type="button" onclick="fetchYouTubeMeta()" class="absolute right-2.5 top-1/2 -translate-y-1/2 px-3.5 py-1.5 bg-sky-100 hover:bg-sky-200 text-sky-700 rounded-lg text-xs font-bold transition">
             제목 가져오기
           </button>
         </div>
@@ -95,10 +95,10 @@
         </select>
       </div>
 
-      <!-- 자동 추출되지만 자유롭게 수정 가능한 제목 인풋 -->
+      <!-- 자동 입력 및 수동 수정 가능 영상 제목 -->
       <div>
         <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          영상 제목 <span class="text-slate-400 font-normal text-xs">(유튜브 제목 자동 수집 후 필요 시 직접 수정 가능)</span>
+          영상 제목 <span class="text-slate-400 font-normal text-xs">(자동 입력 후 직접 수정 가능)</span>
         </label>
         <input type="text" id="videoTitle" placeholder="유튜브 링크를 넣으면 자동으로 채워집니다." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
@@ -237,8 +237,9 @@
     let categories = JSON.parse(localStorage.getItem('megagen_categories')) || defaultCategories;
     let videos = JSON.parse(localStorage.getItem('megagen_videos')) || initialVideos;
 
+    // 유튜브 URL 파싱 함수
     function getYouTubeInfo(url) {
-      if(!url) return { embedUrl: "", thumbUrl: "", rawUrl: "" };
+      if(!url) return { videoId: "", embedUrl: "", thumbUrl: "", watchUrl: "" };
       let videoId = "";
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = url.match(regExp);
@@ -252,27 +253,67 @@
           watchUrl: `https://www.youtube.com/watch?v=${videoId}`
         };
       }
-      return { embedUrl: url, thumbUrl: "", watchUrl: url };
+      return { videoId: "", embedUrl: url, thumbUrl: "", watchUrl: url };
     }
 
-    // 유튜브 oEmbed API를 활용한 원본 제목 자동 수집
+    // 유튜브 제목 자동 수집 (JSONP 우회 연동)
     async function fetchYouTubeMeta() {
-      const url = document.getElementById('videoUrl').value.trim();
+      const urlInput = document.getElementById('videoUrl');
+      const titleInput = document.getElementById('videoTitle');
+      const url = urlInput.value.trim();
       const info = getYouTubeInfo(url);
-      if (!info.videoId) return;
 
-      try {
-        const res = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${info.videoId}`);
-        const data = await res.json();
+      if (!info.videoId) {
+        return;
+      }
+
+      if (titleInput.value.trim() !== "") {
+        return;
+      }
+
+      const originalPlaceholder = titleInput.placeholder;
+      titleInput.placeholder = "유튜브 제목을 불러오는 중입니다...";
+
+      const callbackName = 'yt_cb_' + Math.floor(Math.random() * 100000);
+      let isFetched = false;
+
+      window[callbackName] = function(data) {
         if (data && data.title) {
-          const titleInput = document.getElementById('videoTitle');
-          if (!titleInput.value.trim()) {
+          titleInput.value = data.title;
+          isFetched = true;
+        }
+        cleanup();
+      };
+
+      const script = document.createElement('script');
+      script.src = `https://www.youtube.com/oembed?url=${encodeURIComponent(info.watchUrl)}&format=json&callback=${callbackName}`;
+      
+      function cleanup() {
+        if (document.body.contains(script)) document.body.removeChild(script);
+        delete window[callbackName];
+        titleInput.placeholder = originalPlaceholder;
+      }
+
+      script.onerror = async function() {
+        cleanup();
+        try {
+          const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(info.watchUrl)}`);
+          const data = await res.json();
+          if (data && data.title) {
             titleInput.value = data.title;
           }
+        } catch (e) {
+          console.warn("YouTube meta load failed:", e);
         }
-      } catch (e) {
-        console.log("YouTube oEmbed fetch error:", e);
-      }
+      };
+
+      document.body.appendChild(script);
+
+      setTimeout(() => {
+        if (!isFetched && window[callbackName]) {
+          cleanup();
+        }
+      }, 3000);
     }
 
     function getAdminPassword() {
