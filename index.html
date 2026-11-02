@@ -16,45 +16,45 @@
 
   <!-- 네비게이션 헤더 (100% Full Width) -->
   <header class="border-b border-slate-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 w-full">
-    <div class="w-full px-8 xl:px-12 h-20 flex items-center justify-between">
+    <div class="w-full px-8 xl:px-12 h-24 flex items-center justify-between">
       
-      <!-- 브랜드 로고 및 타이틀 -->
-      <div class="flex items-center gap-4">
-        <span class="text-2xl font-black tracking-tight text-sky-600">MEGAGEN</span>
-        <span class="text-slate-300 font-light text-lg">|</span>
-        <span class="text-lg font-bold text-slate-800 tracking-tight">국내영업 비디오 허브</span>
-      </div>
+      <!-- 1. 브랜드 로고 클릭 시 홈(index.html) 이동 -->
+      <a href="index.html" class="flex items-center gap-4 hover:opacity-90 transition cursor-pointer">
+        <span class="text-3xl font-black tracking-tight text-sky-600">MEGAGEN</span>
+        <span class="text-slate-300 font-light text-2xl">|</span>
+        <span class="text-xl font-bold text-slate-800 tracking-tight">국내영업 비디오 허브</span>
+      </a>
 
       <!-- 검색바 및 관리자 페이지 링크 -->
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-5">
         <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
           <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="제품, 술식, 원장님 검색..." 
-            class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs w-64 xl:w-80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+            class="pl-11 pr-5 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm w-72 xl:w-96 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
         </div>
-        <a href="admin.html" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition flex items-center gap-1.5 shadow-sm">
+        <a href="admin.html" class="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition flex items-center gap-2 shadow-sm">
           <i class="fa-solid fa-gear"></i> 관리자
         </a>
       </div>
     </div>
 
-    <!-- 동적 카테고리 탭 (풀폭 정렬) -->
-    <div id="categoryNav" class="w-full px-8 xl:px-12 flex gap-8 text-sm font-medium overflow-x-auto scrollbar-none border-t border-slate-50">
+    <!-- 3. 카테고리 탭 텍스트 크기 확대 (text-lg) -->
+    <div id="categoryNav" class="w-full px-8 xl:px-12 flex gap-10 text-lg font-medium overflow-x-auto scrollbar-none border-t border-slate-100">
       <!-- 스크립트로 렌더링 -->
     </div>
   </header>
 
   <!-- 메인 비디오 카드 그리드 -->
-  <main class="w-full px-8 xl:px-12 py-10">
-    <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 xl:gap-8">
+  <main class="w-full px-8 xl:px-12 py-12">
+    <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-8 xl:gap-10">
       <!-- 스크립트로 렌더링 -->
     </div>
   </main>
 
   <!-- 비디오 스트리밍 모달 -->
   <div id="videoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-black rounded-2xl w-full max-w-4xl overflow-hidden shadow-2xl relative">
-      <button onclick="closeModal()" class="absolute top-4 right-5 text-white/70 hover:text-white text-2xl z-20 transition">
+    <div class="bg-black rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl relative">
+      <button onclick="closeModal()" class="absolute top-5 right-6 text-white/70 hover:text-white text-3xl z-20 transition">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="aspect-video w-full">
@@ -64,12 +64,10 @@
   </div>
 
   <script>
-    // 기본 카테고리 목록
     const defaultCategories = [
       "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"
     ];
 
-    // 기본 영상 초기 데이터
     const initialVideos = [
       {
         id: 1,
@@ -132,22 +130,22 @@
     let videos = JSON.parse(localStorage.getItem('megagen_videos')) || initialVideos;
     let currentCategory = "전체";
 
-    // 카테고리 탭 렌더링
+    // 카테고리 탭 렌더링 (글자 크기 text-lg 확대)
     function renderCategoryNav() {
       const nav = document.getElementById('categoryNav');
       nav.innerHTML = `
-        <button onclick="filterCategory('전체')" class="category-btn ${currentCategory === '전체' ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3 transition pt-2 whitespace-nowrap" data-cat="전체">전체</button>
+        <button onclick="filterCategory('전체')" class="category-btn ${currentCategory === '전체' ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3.5 transition pt-3 whitespace-nowrap text-lg" data-cat="전체">전체</button>
       `;
 
       categories.forEach(cat => {
         const isActive = currentCategory === cat;
         nav.innerHTML += `
-          <button onclick="filterCategory('${cat}')" class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3 transition pt-2 whitespace-nowrap" data-cat="${cat}">${cat}</button>
+          <button onclick="filterCategory('${cat}')" class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3.5 transition pt-3 whitespace-nowrap text-lg" data-cat="${cat}">${cat}</button>
         `;
       });
     }
 
-    // 메인 카드 그리드 렌더링
+    // 카드 그리드 렌더링 (제목 및 본문 폰트 확대)
     function renderGrid() {
       const grid = document.getElementById('videoGrid');
       grid.innerHTML = "";
@@ -156,9 +154,9 @@
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full py-20 text-center text-slate-400">
-            <i class="fa-regular fa-folder-open text-3xl mb-3 block"></i>
-            등록된 영상이 없습니다.
+          <div class="col-span-full py-24 text-center text-slate-400">
+            <i class="fa-regular fa-folder-open text-4xl mb-4 block"></i>
+            <span class="text-base">등록된 영상이 없습니다.</span>
           </div>
         `;
         return;
@@ -169,43 +167,46 @@
           grid.innerHTML += `
             <div class="bg-slate-50/70 rounded-2xl border border-dashed border-slate-200 aspect-video-box relative overflow-hidden group">
               <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 mb-3 shadow-sm">
-                  <i class="fa-solid fa-lock text-sm"></i>
+                <div class="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 mb-3 shadow-sm">
+                  <i class="fa-solid fa-lock text-base"></i>
                 </div>
-                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-widest mb-1">${v.category}</span>
-                <h4 class="text-sm font-semibold text-slate-700 line-clamp-1">${v.title}</h4>
-                <p class="text-xs text-slate-400 mt-1">콘텐츠 오픈 준비 중입니다</p>
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-widest mb-1.5">${v.category}</span>
+                <h4 class="text-base font-bold text-slate-700 line-clamp-1">${v.title}</h4>
+                <p class="text-sm text-slate-400 mt-1.5">콘텐츠 오픈 준비 중입니다</p>
               </div>
             </div>
           `;
         } else {
           grid.innerHTML += `
             <div class="group flex flex-col justify-between">
-              <div class="aspect-video w-full rounded-2xl overflow-hidden relative bg-slate-100 cursor-pointer mb-3.5 shadow-sm group-hover:shadow-md transition duration-300" onclick="openModal('${v.videoUrl}', '${v.title}')">
+              <!-- 썸네일 -->
+              <div class="aspect-video w-full rounded-2xl overflow-hidden relative bg-slate-100 cursor-pointer mb-4 shadow-sm group-hover:shadow-md transition duration-300" onclick="openModal('${v.videoUrl}', '${v.title}')">
                 <img src="${v.thumbUrl || 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80'}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                 <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition duration-300 flex items-center justify-center">
-                  <div class="w-12 h-12 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-lg transform group-hover:scale-110 transition duration-300">
-                    <i class="fa-solid fa-play ml-0.5 text-sm text-sky-600"></i>
+                  <div class="w-14 h-14 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-xl transform group-hover:scale-110 transition duration-300">
+                    <i class="fa-solid fa-play ml-0.5 text-base text-sky-600"></i>
                   </div>
                 </div>
               </div>
 
+              <!-- 텍스트 영역 (크기 확대) -->
               <div>
-                <span class="text-[11px] font-semibold text-sky-600 tracking-tight">${v.category}</span>
-                <h3 class="text-sm font-bold text-slate-900 mt-0.5 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
-                <p class="text-xs text-slate-500 mt-1 line-clamp-1 font-light">${v.desc || ''}</p>
+                <span class="text-xs font-semibold text-sky-600 tracking-tight">${v.category}</span>
+                <h3 class="text-base font-bold text-slate-900 mt-1 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
+                <p class="text-sm text-slate-500 mt-1.5 line-clamp-1 font-normal">${v.desc || ''}</p>
               </div>
 
-              <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                <button onclick="openModal('${v.videoUrl}', '${v.title}')" class="text-xs font-semibold text-slate-700 hover:text-sky-600 flex items-center gap-1.5 transition">
-                  <i class="fa-regular fa-circle-play text-sky-600"></i> 바로보기
+              <!-- 하단 액션 버튼 (크기 확대) -->
+              <div class="mt-5 pt-3.5 border-t border-slate-100 flex items-center justify-between">
+                <button onclick="openModal('${v.videoUrl}', '${v.title}')" class="text-sm font-semibold text-slate-700 hover:text-sky-600 flex items-center gap-2 transition">
+                  <i class="fa-regular fa-circle-play text-base text-sky-600"></i> 바로보기
                 </button>
-                <div class="flex items-center gap-1">
-                  <button onclick="shareKakao('${v.title}', '${v.videoUrl}', '${v.shareMsg || ''}')" title="원장님께 카톡 전송" class="w-7 h-7 rounded-full text-slate-400 hover:text-amber-500 hover:bg-amber-50 flex items-center justify-center transition">
-                    <i class="fa-solid fa-share-nodes text-xs"></i>
+                <div class="flex items-center gap-2">
+                  <button onclick="shareKakao('${v.title}', '${v.videoUrl}', '${v.shareMsg || ''}')" title="원장님께 카톡 전송" class="w-8 h-8 rounded-full text-slate-400 hover:text-amber-500 hover:bg-amber-50 flex items-center justify-center transition">
+                    <i class="fa-solid fa-share-nodes text-sm"></i>
                   </button>
-                  <a href="${v.downloadUrl || v.videoUrl}" download title="로컬 다운로드" class="w-7 h-7 rounded-full text-slate-400 hover:text-sky-600 hover:bg-sky-50 flex items-center justify-center transition">
-                    <i class="fa-solid fa-arrow-down text-xs"></i>
+                  <a href="${v.downloadUrl || v.videoUrl}" download title="로컬 다운로드" class="w-8 h-8 rounded-full text-slate-400 hover:text-sky-600 hover:bg-sky-50 flex items-center justify-center transition">
+                    <i class="fa-solid fa-arrow-down text-sm"></i>
                   </a>
                 </div>
               </div>
@@ -245,7 +246,6 @@
       });
     }
 
-    // 초기 실행
     renderCategoryNav();
     renderGrid();
   </script>
