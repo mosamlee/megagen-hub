@@ -6,7 +6,6 @@
   <title>MEGAGEN Video Hub - 관리자 센터</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- 드래그 앤 드롭 전문 라이브러리 SortableJS -->
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
   <style>
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -62,7 +61,7 @@
         + 영상 등록
       </button>
       <button onclick="switchTab('tabVideos')" id="btnTabVideos" class="tab-btn text-slate-400 hover:text-slate-700 py-3.5 transition">
-        🎬 영상 순서 & 삭제 관리
+        🎬 영상 순서 & 홈 고정 관리
       </button>
       <button onclick="switchTab('tabCategories')" id="btnTabCategories" class="tab-btn text-slate-400 hover:text-slate-700 py-3.5 transition">
         📁 카테고리 관리
@@ -70,7 +69,6 @@
     </div>
   </header>
 
-  <!-- 관리 메인 콘텐츠 -->
   <main class="max-w-7xl mx-auto px-8 py-10 flex-1 w-full">
 
     <!-- 탭 1: 신규 영상 등록 -->
@@ -81,9 +79,7 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          유튜브 링크 <span class="text-sky-600 font-normal text-xs">* 링크 입력 후 [제목 가져오기]를 누르거나 바깥을 클릭하세요.</span>
-        </label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">유튜브 링크</label>
         <div class="relative">
           <input type="text" id="videoUrl" onblur="fetchYouTubeMeta()" placeholder="https://youtu.be/... 또는 https://www.youtube.com/watch?v=..." 
             class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
@@ -100,9 +96,7 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">
-          영상 제목 <span class="text-slate-400 font-normal text-xs">(자동 입력 후 직접 수정 가능)</span>
-        </label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">영상 제목</label>
         <input type="text" id="videoTitle" placeholder="유튜브 링크를 넣으면 자동으로 채워집니다." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
       </div>
@@ -113,16 +107,25 @@
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
       </div>
 
-      <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">공개 상태</label>
-        <select id="videoStatus" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
-          <option value="active">즉시 공개</option>
-          <option value="locked">오픈 예정 (잠금 표시)</option>
-        </select>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">공개 상태</label>
+          <select id="videoStatus" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
+            <option value="active">즉시 공개</option>
+            <option value="locked">오픈 예정 (잠금 표시)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">홈 상단 고정 여부</label>
+          <select id="videoPinned" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
+            <option value="false">일반 목록에 노출</option>
+            <option value="true">⭐ 홈 화면 상단에 고정</option>
+          </select>
+        </div>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold text-slate-700 mb-1.5">다운로드 링크 (선택: 구글 드라이브 / MP4 직링크)</label>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">다운로드 링크 (선택)</label>
         <input type="text" id="downloadUrl" placeholder="https://drive.google.com/..." 
           class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500">
       </div>
@@ -140,28 +143,34 @@
       </div>
     </section>
 
-    <!-- 탭 2: 영상 목록 (드래그 앤 드롭 지원) -->
-    <section id="tabVideos" class="hidden max-w-5xl bg-white p-10 rounded-3xl border border-slate-200 shadow-sm space-y-5">
-      <div class="flex justify-between items-center pb-3 border-b border-slate-100">
+    <!-- 탭 2: 영상 관리 리스트 (카테고리별 분리 정렬 & 홈 고정 기능) -->
+    <section id="tabVideos" class="hidden max-w-5xl bg-white p-10 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center pb-4 border-b border-slate-100 gap-4">
         <div>
           <h3 class="text-xl font-bold text-slate-900">등록된 영상 관리</h3>
           <p class="text-sm text-slate-500 mt-0.5">
-            <span class="font-semibold text-sky-600"><i class="fa-solid fa-grip-vertical"></i> 아이콘을 마우스로 잡고 위아래로 끌어다 놓으면</span> 순서가 즉시 변경됩니다.
+            <span class="font-semibold text-sky-600">카테고리를 선택하여 해당 카테고리 내부 영상 순서를 드래그 앤 드롭</span>하세요.
           </p>
         </div>
-        <span id="videoTotalCount" class="text-sm font-semibold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-full"></span>
+
+        <!-- 카테고리별 필터 드롭다운 -->
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">정렬 대상:</span>
+          <select id="manageCategoryFilter" onchange="renderVideoList()" class="px-3.5 py-2 bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 focus:outline-none focus:border-sky-500">
+            <option value="전체">전체 카테고리 (글로벌 순서)</option>
+          </select>
+        </div>
       </div>
+
       <div id="videoListContainer" class="space-y-3 pt-2">
       </div>
     </section>
 
-    <!-- 탭 3: 카테고리 관리 (드래그 앤 드롭 지원) -->
+    <!-- 탭 3: 카테고리 관리 -->
     <section id="tabCategories" class="hidden max-w-4xl bg-white p-10 rounded-3xl border border-slate-200 shadow-sm space-y-6">
       <div>
         <h3 class="text-xl font-bold text-slate-900">카테고리 관리</h3>
-        <p class="text-sm text-slate-500 mt-0.5">
-          <span class="font-semibold text-sky-600"><i class="fa-solid fa-grip-vertical"></i> 아이콘을 끌어다 놓아</span> 메인 허브의 카테고리 노출 순서를 바로 바꿀 수 있습니다.
-        </p>
+        <p class="text-sm text-slate-500 mt-0.5">카테고리를 추가하거나 드래그 앤 드롭으로 탭 순서를 변경합니다.</p>
       </div>
 
       <div class="flex gap-3">
@@ -190,6 +199,7 @@
         title: "ARi 전치부 식립 솔루션 런칭",
         desc: "치조골 흡수가 심한 전치부 극복을 위한 특화 프로토콜",
         status: "active",
+        isPinned: true,
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
         thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
         downloadUrl: "https://youtu.be/GpXyohF9GxY",
@@ -201,6 +211,7 @@
         title: "R2i5 구강스캐너 실시간 핸즈온",
         desc: "초고속 무치악 스캔 및 직관적인 디지털 워크플로우",
         status: "active",
+        isPinned: false,
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
         thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
         downloadUrl: "https://youtu.be/GpXyohF9GxY",
@@ -212,6 +223,7 @@
         title: "박광범의 임플란트 수술방_최종보철 52회",
         desc: "골질 불량 부위 KnifeThread 식립 테크닉 및 라이브 서저리",
         status: "active",
+        isPinned: true,
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
         thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
         downloadUrl: "https://youtu.be/GpXyohF9GxY",
@@ -223,6 +235,7 @@
         title: "Molar Immediate 구치부 발치즉시 식립",
         desc: "BD Cuff를 활용한 연조직 보존 및 Bone Loss 방지",
         status: "locked",
+        isPinned: false,
         videoUrl: "",
         thumbUrl: "",
         downloadUrl: "",
@@ -234,6 +247,7 @@
         title: "Waterlase 최소침습 치료 및 진료실 도입 가이드",
         desc: "물방울 레이저를 활용한 임플란트 주위염 및 치주 질환 케어",
         status: "active",
+        isPinned: false,
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
         thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
         downloadUrl: "https://youtu.be/GpXyohF9GxY",
@@ -247,7 +261,6 @@
     let videoSortableInstance = null;
     let categorySortableInstance = null;
 
-    // 유튜브 정보 파싱
     function getYouTubeInfo(url) {
       if(!url) return { videoId: "", embedUrl: "", thumbUrl: "", watchUrl: "" };
       let videoId = "";
@@ -266,7 +279,6 @@
       return { videoId: "", embedUrl: url, thumbUrl: "", watchUrl: url };
     }
 
-    // 유튜브 제목 자동 수집
     async function fetchYouTubeMeta() {
       const urlInput = document.getElementById('videoUrl');
       const titleInput = document.getElementById('videoTitle');
@@ -381,6 +393,7 @@
         renderCategoryOptions();
       } else if (tabId === 'tabVideos') {
         document.getElementById('btnTabVideos').className = "tab-btn text-sky-600 border-b-2 border-sky-600 py-3.5 transition";
+        populateManageCategoryFilter();
         renderVideoList();
       } else if (tabId === 'tabCategories') {
         document.getElementById('btnTabCategories').className = "tab-btn text-sky-600 border-b-2 border-sky-600 py-3.5 transition";
@@ -396,49 +409,70 @@
       });
     }
 
-    // 영상 목록 렌더링 및 드래그 앤 드롭 바인딩
+    function populateManageCategoryFilter() {
+      const sel = document.getElementById('manageCategoryFilter');
+      const currentVal = sel.value;
+      sel.innerHTML = `<option value="전체">전체 카테고리 (글로벌 순서)</option>`;
+      categories.forEach(cat => {
+        sel.innerHTML += `<option value="${cat}">${cat} 내부 순서</option>`;
+      });
+      if (categories.includes(currentVal)) {
+        sel.value = currentVal;
+      }
+    }
+
+    // 영상 목록 렌더링 및 카테고리별 정렬 지원
     function renderVideoList() {
       const container = document.getElementById('videoListContainer');
-      document.getElementById('videoTotalCount').innerText = `총 ${videos.length}개`;
+      const filterCat = document.getElementById('manageCategoryFilter').value;
       container.innerHTML = "";
 
-      if(videos.length === 0) {
-        container.innerHTML = `<p class="text-sm text-slate-400 py-8 text-center">등록된 영상이 없습니다.</p>`;
+      let targetVideos = [];
+      if (filterCat === "전체") {
+        targetVideos = [...videos];
+      } else {
+        targetVideos = videos.filter(v => v.category === filterCat);
+      }
+
+      if(targetVideos.length === 0) {
+        container.innerHTML = `<p class="text-sm text-slate-400 py-8 text-center">선택된 카테고리에 등록된 영상이 없습니다.</p>`;
         return;
       }
 
-      videos.forEach((v, idx) => {
+      targetVideos.forEach((v, idx) => {
         container.innerHTML += `
           <div class="video-item p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-4 transition hover:border-slate-300" data-id="${v.id}">
             <div class="flex items-center gap-4 overflow-hidden">
-              <!-- 드래그 핸들 -->
               <div class="drag-handle text-slate-400 hover:text-sky-600 p-1 flex items-center justify-center" title="마우스로 끌어서 순서 이동">
                 <i class="fa-solid fa-grip-vertical text-base"></i>
               </div>
               <span class="index-badge text-slate-400 font-mono font-bold text-sm w-6 text-center">${idx + 1}</span>
-              <div class="w-16 h-10 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
+              <div class="w-16 h-10 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0 relative">
                 ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-xs">🔒</div>`}
               </div>
               <div class="truncate">
                 <div class="flex items-center gap-2">
                   <span class="text-xs font-semibold text-sky-600 bg-sky-50 px-2 py-0.5 rounded">${v.category}</span>
                   <span class="font-bold text-slate-900 text-sm truncate">${v.title}</span>
+                  ${v.isPinned ? `<span class="bg-amber-100 text-amber-700 font-bold text-[10px] px-1.5 py-0.5 rounded flex items-center gap-1"><i class="fa-solid fa-thumbtack"></i> 홈 고정</span>` : ''}
                 </div>
                 <span class="text-xs text-slate-400 block truncate mt-0.5">${v.desc || '설명 없음'}</span>
               </div>
             </div>
 
             <div class="flex items-center gap-2 flex-shrink-0">
-              <button onclick="moveVideo(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-8 h-8 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs">
-                <i class="fa-solid fa-chevron-up"></i>
+              <!-- 홈 고정 토글 버튼 -->
+              <button onclick="togglePinVideo(${v.id})" title="홈 화면 상단 고정 토글" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition flex items-center gap-1.5 ${v.isPinned ? 'bg-amber-400 text-amber-950 border-amber-500 font-bold' : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'}">
+                <i class="fa-solid fa-thumbtack"></i> ${v.isPinned ? '고정됨' : '고정'}
               </button>
-              <button onclick="moveVideo(${idx}, 1)" ${idx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-8 h-8 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs">
-                <i class="fa-solid fa-chevron-down"></i>
-              </button>
-              <button onclick="toggleVideoStatus(${idx})" title="공개/잠금 전환" class="px-3 py-1.5 text-xs font-semibold rounded-lg border ${v.status === 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">
+              
+              <!-- 공개 상태 토글 버튼 -->
+              <button onclick="toggleVideoStatus(${v.id})" title="공개/잠금 전환" class="px-2.5 py-1.5 text-xs font-semibold rounded-lg border ${v.status === 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">
                 ${v.status === 'active' ? '공개' : '잠금'}
               </button>
-              <button onclick="deleteVideo(${idx})" title="삭제" class="w-8 h-8 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 flex items-center justify-center text-rose-500 transition ml-1 text-xs">
+
+              <!-- 삭제 버튼 -->
+              <button onclick="deleteVideo(${v.id})" title="삭제" class="w-8 h-8 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 flex items-center justify-center text-rose-500 transition ml-1 text-xs">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
             </div>
@@ -446,7 +480,7 @@
         `;
       });
 
-      // SortableJS 인스턴스 초기화 및 바인딩
+      // SortableJS 인스턴스 초기화
       if (videoSortableInstance) videoSortableInstance.destroy();
       videoSortableInstance = new Sortable(container, {
         handle: '.drag-handle',
@@ -454,40 +488,58 @@
         ghostClass: 'sortable-ghost',
         onEnd: function() {
           const itemElements = container.querySelectorAll('.video-item');
-          const newVideos = [];
-          itemElements.forEach((el, index) => {
-            const id = Number(el.dataset.id);
-            const found = videos.find(v => v.id === id);
-            if (found) newVideos.push(found);
-            const badge = el.querySelector('.index-badge');
-            if (badge) badge.innerText = index + 1;
-          });
-          videos = newVideos;
+          const orderedIds = Array.from(itemElements).map(el => Number(el.dataset.id));
+
+          if (filterCat === "전체") {
+            const newVideos = [];
+            orderedIds.forEach(id => {
+              const f = videos.find(v => v.id === id);
+              if (f) newVideos.push(f);
+            });
+            videos = newVideos;
+          } else {
+            // 특정 카테고리 내에서만 재정렬된 경우
+            const reorderedSubset = orderedIds.map(id => videos.find(v => v.id === id));
+            let subsetIdx = 0;
+            videos = videos.map(v => {
+              if (v.category === filterCat) {
+                const nextItem = reorderedSubset[subsetIdx];
+                subsetIdx++;
+                return nextItem;
+              }
+              return v;
+            });
+          }
+
           saveVideos();
           renderVideoList();
         }
       });
     }
 
-    function moveVideo(idx, dir) {
-      const target = idx + dir;
-      if (target < 0 || target >= videos.length) return;
-      const tmp = videos[idx];
-      videos[idx] = videos[target];
-      videos[target] = tmp;
-      saveVideos();
-      renderVideoList();
+    function togglePinVideo(id) {
+      const v = videos.find(item => item.id === id);
+      if (v) {
+        v.isPinned = !v.isPinned;
+        saveVideos();
+        renderVideoList();
+      }
     }
 
-    function toggleVideoStatus(idx) {
-      videos[idx].status = videos[idx].status === 'active' ? 'locked' : 'active';
-      saveVideos();
-      renderVideoList();
+    function toggleVideoStatus(id) {
+      const v = videos.find(item => item.id === id);
+      if (v) {
+        v.status = v.status === 'active' ? 'locked' : 'active';
+        saveVideos();
+        renderVideoList();
+      }
     }
 
-    function deleteVideo(idx) {
-      if (confirm(`'${videos[idx].title}' 영상을 삭제하시겠습니까?`)) {
-        videos.splice(idx, 1);
+    function deleteVideo(id) {
+      const v = videos.find(item => item.id === id);
+      if (!v) return;
+      if (confirm(`'${v.title}' 영상을 삭제하시겠습니까?`)) {
+        videos = videos.filter(item => item.id !== id);
         saveVideos();
         renderVideoList();
       }
@@ -503,12 +555,15 @@
         return;
       }
 
+      const isPinned = document.getElementById('videoPinned').value === "true";
+
       const newV = {
         id: Date.now(),
         category: document.getElementById('videoCat').value,
         title: title,
         desc: document.getElementById('videoDesc').value.trim(),
         status: document.getElementById('videoStatus').value,
+        isPinned: isPinned,
         videoUrl: yt.embedUrl || rawUrl,
         thumbUrl: yt.thumbUrl,
         downloadUrl: document.getElementById('downloadUrl').value.trim(),
@@ -531,7 +586,6 @@
       localStorage.setItem('megagen_videos', JSON.stringify(videos));
     }
 
-    // 카테고리 목록 렌더링 및 드래그 앤 드롭 바인딩
     function renderCategoryList() {
       const container = document.getElementById('categoryListContainer');
       container.innerHTML = "";
@@ -540,7 +594,6 @@
         container.innerHTML += `
           <div class="category-item p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-center justify-between gap-4 transition hover:border-slate-300" data-cat="${cat}">
             <div class="flex items-center gap-4">
-              <!-- 드래그 핸들 -->
               <div class="drag-handle-cat text-slate-400 hover:text-sky-600 p-1 flex items-center justify-center cursor-grab" title="마우스로 끌어서 순서 이동">
                 <i class="fa-solid fa-grip-vertical text-base"></i>
               </div>
@@ -549,12 +602,6 @@
             </div>
 
             <div class="flex items-center gap-2">
-              <button onclick="moveCategory(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-8 h-8 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs">
-                <i class="fa-solid fa-chevron-up"></i>
-              </button>
-              <button onclick="moveCategory(${idx}, 1)" ${idx === categories.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-8 h-8 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600 text-xs">
-                <i class="fa-solid fa-chevron-down"></i>
-              </button>
               <button onclick="editCategory(${idx})" title="이름 수정" class="px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-100">
                 수정
               </button>
@@ -566,7 +613,6 @@
         `;
       });
 
-      // 카테고리 SortableJS 초기화
       if (categorySortableInstance) categorySortableInstance.destroy();
       categorySortableInstance = new Sortable(container, {
         handle: '.drag-handle-cat',
@@ -629,22 +675,13 @@
       }
     }
 
-    function moveCategory(idx, dir) {
-      const target = idx + dir;
-      if (target < 0 || target >= categories.length) return;
-      const tmp = categories[idx];
-      categories[idx] = categories[target];
-      categories[target] = tmp;
-      saveCategories();
-      renderCategoryList();
-    }
-
     function saveCategories() {
       localStorage.setItem('megagen_categories', JSON.stringify(categories));
     }
 
     function initAdminData() {
       renderCategoryOptions();
+      populateManageCategoryFilter();
       renderVideoList();
       renderCategoryList();
     }
