@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEGAGEN Video Hub - 관리자 센터</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- 관리자 로그인 락 화면 (비밀번호 입력 전) -->
+  <div id="authLockScreen" class="fixed inset-0 bg-white z-50 flex items-center justify-center p-6">
+    <div class="w-full max-w-sm text-center">
+      <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl shadow-sm">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h2 class="text-xl font-bold text-slate-900 tracking-tight">비디오 허브 관리자 센터</h2>
+      <p class="text-xs text-slate-500 mt-1">접속 비밀번호를 입력해주세요. (초기: 1234)</p>
+
+      <form onsubmit="handleLogin(event)" class="mt-6 space-y-3">
+        <input type="password" id="loginPassword" placeholder="관리자 비밀번호" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-center tracking-widest focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+        <button type="submit" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-sm transition shadow-sm">로그인</button>
+        <a href="index.html" class="block text-xs text-slate-400 hover:text-slate-600 pt-2">← 메인 페이지로 돌아가기</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- 관리자 상단 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-6 h-18 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-xl font-black text-sky-600">MEGAGEN</a>
+        <span class="text-slate-300">|</span>
+        <span class="text-sm font-bold text-slate-800">관리자 센터</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="promptChangePassword()" class="px-3.5 py-1.5 text-xs text-slate-600 hover:text-sky-600 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-key"></i> 비밀번호 변경
+        </button>
+        <button onclick="handleLogout()" class="px-3.5 py-1.5 text-xs text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+        </button>
+        <a href="index.html" class="px-3.5 py-1.5 text-xs text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-house"></i> 메인 허브
+        </a>
+      </div>
+    </div>
+
+    <!-- 관리 3대 탭 메뉴 -->
+    <div class="max-w-7xl mx-auto px-6 flex gap-6 text-sm font-semibold border-t border-slate-100">
+      <button onclick="switchTab('tabRegister')" id="btnTabRegister" class="tab-btn text-sky-600 border-b-2 border-sky-600 py-3 transition">
+        + 영상 등록
+      </button>
+      <button onclick="switchTab('tabVideos')" id="btnTabVideos" class="tab-btn text-slate-400 hover:text-slate-700 py-3 transition">
+        🎬 영상 순서 & 삭제 관리
+      </button>
+      <button onclick="switchTab('tabCategories')" id="btnTabCategories" class="tab-btn text-slate-400 hover:text-slate-700 py-3 transition">
+        📁 카테고리 관리
+      </button>
+    </div>
+  </header>
+
+  <!-- 관리 메인 콘텐츠 -->
+  <main class="max-w-7xl mx-auto px-6 py-8 flex-1 w-full">
+
+    <!-- 탭 1: 신규 영상 등록 -->
+    <section id="tabRegister" class="max-w-2xl bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+      <div>
+        <h3 class="text-base font-bold text-slate-900">새 영상 콘텐츠 등록</h3>
+        <p class="text-xs text-slate-500">유튜브 링크를 입력하면 썸네일이 자동 생성됩니다.</p>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">카테고리</label>
+        <select id="videoCat" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+          <!-- 스크립트로 옵션 주입 -->
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">영상 제목</label>
+        <input type="text" id="videoTitle" placeholder="예: [신제품] ARi 전치부 솔루션 런칭" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">한 줄 설명</label>
+        <input type="text" id="videoDesc" placeholder="예: 치조골 흡수가 심한 전치부 극복 프로토콜" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">공개 상태</label>
+        <select id="videoStatus" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+          <option value="active">즉시 공개</option>
+          <option value="locked">오픈 예정 (잠금 표시)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">유튜브 링크 (일반/단축/임베드 모두 지원)</label>
+        <input type="text" id="videoUrl" placeholder="https://youtu.be/... 또는 https://www.youtube.com/watch?v=..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">다운로드 링크 (선택: 구글 드라이브 / MP4 직링크)</label>
+        <input type="text" id="downloadUrl" placeholder="https://drive.google.com/..." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 mb-1">카톡 공유 추천 멘트 (선택)</label>
+        <input type="text" id="shareMsg" placeholder="원장님, 문의주신 ARi 전치부 식립 솔루션 영상 공유드립니다." class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+      </div>
+
+      <div class="pt-2">
+        <button onclick="addVideo()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-xs transition shadow-sm">영상 등록 완료</button>
+      </div>
+    </section>
+
+    <!-- 탭 2: 영상 목록 및 순서/삭제 관리 -->
+    <section id="tabVideos" class="hidden max-w-4xl bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+      <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">등록된 영상 관리</h3>
+          <p class="text-xs text-slate-500">순서 이동(▲/▼), 공개 토글, 삭제가 가능합니다.</p>
+        </div>
+        <span id="videoTotalCount" class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full"></span>
+      </div>
+      <div id="videoListContainer" class="space-y-2 pt-2">
+        <!-- 스크립트 렌더링 -->
+      </div>
+    </section>
+
+    <!-- 탭 3: 카테고리 관리 -->
+    <section id="tabCategories" class="hidden max-w-3xl bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <div>
+        <h3 class="text-base font-bold text-slate-900">카테고리 관리</h3>
+        <p class="text-xs text-slate-500">카테고리 추가, 순서 변경, 이름 수정 및 삭제를 관리합니다.</p>
+      </div>
+
+      <!-- 새 카테고리 추가 인풋 -->
+      <div class="flex gap-2">
+        <input type="text" id="newCategoryName" placeholder="새 카테고리 이름 입력..." class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:border-sky-500">
+        <button onclick="addCategory()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-xs transition flex-shrink-0">+ 카테고리 추가</button>
+      </div>
+
+      <!-- 카테고리 리스트 -->
+      <div id="categoryListContainer" class="space-y-2 pt-2 border-t border-slate-100">
+        <!-- 스크립트 렌더링 -->
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // 기본 카테고리
+    const defaultCategories = [
+      "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"
+    ];
+
+    // 기본 영상 데이터
+    const initialVideos = [
+      {
+        id: 1,
+        category: "신제품",
+        title: "ARi 전치부 식립 솔루션 런칭",
+        desc: "치조골 흡수가 심한 전치부 극복을 위한 특화 프로토콜",
+        status: "active",
+        videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
+        thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 문의주신 ARi 전치부 식립 솔루션 영상 공유드립니다."
+      },
+      {
+        id: 2,
+        category: "신제품",
+        title: "R2i5 구강스캐너 실시간 핸즈온",
+        desc: "초고속 무치악 스캔 및 직관적인 디지털 워크플로우",
+        status: "active",
+        videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
+        thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, R2i5 구강스캐너 실시간 핸즈온 영상 공유드립니다."
+      },
+      {
+        id: 3,
+        category: "임플란트 솔루션",
+        title: "박광범의 임플란트 수술방_최종보철 52회",
+        desc: "골질 불량 부위 KnifeThread 식립 테크닉 및 라이브 서저리",
+        status: "active",
+        videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
+        thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 박광범 원장의 임플란트 수술방 하이라이트 영상 공유드립니다."
+      },
+      {
+        id: 4,
+        category: "임플란트 솔루션",
+        title: "Molar Immediate 구치부 발치즉시 식립",
+        desc: "BD Cuff를 활용한 연조직 보존 및 Bone Loss 방지",
+        status: "locked",
+        videoUrl: "",
+        thumbUrl: "",
+        downloadUrl: "",
+        shareMsg: ""
+      },
+      {
+        id: 5,
+        category: "바이오레이즈 솔루션",
+        title: "Waterlase 최소침습 치료 및 진료실 도입 가이드",
+        desc: "물방울 레이저를 활용한 임플란트 주위염 및 치주 질환 케어",
+        status: "active",
+        videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
+        thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 워터레이저 최소침습 진료실 도입 가이드 영상 공유드립니다."
+      }
+    ];
+
+    let categories = JSON.parse(localStorage.getItem('megagen_categories')) || defaultCategories;
+    let videos = JSON.parse(localStorage.getItem('megagen_videos')) || initialVideos;
+
+    // 유튜브 정보 추출 함수
+    function getYouTubeInfo(url) {
+      if(!url) return { embedUrl: "", thumbUrl: "" };
+      let videoId = "";
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+
+      if (match && match[2].length === 11) {
+        videoId = match[2];
+        return {
+          embedUrl: `https://www.youtube.com/embed/${videoId}`,
+          thumbUrl: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+        };
+      }
+      return { embedUrl: url, thumbUrl: "" };
+    }
+
+    // 인증 관련 로직
+    function getAdminPassword() {
+      return localStorage.getItem('megagen_admin_pwd') || "1234";
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const input = document.getElementById('loginPassword').value;
+      if (input === getAdminPassword()) {
+        sessionStorage.setItem('megagen_admin_logged', 'true');
+        document.getElementById('authLockScreen').classList.add('hidden');
+        initAdminData();
+      } else {
+        alert("비밀번호가 올바르지 않습니다.");
+      }
+    }
+
+    function checkLoginStatus() {
+      if (sessionStorage.getItem('megagen_admin_logged') === 'true') {
+        document.getElementById('authLockScreen').classList.add('hidden');
+        initAdminData();
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('megagen_admin_logged');
+      location.reload();
+    }
+
+    function promptChangePassword() {
+      const current = prompt("현재 비밀번호를 입력해주세요:");
+      if (!current) return;
+      if (current !== getAdminPassword()) {
+        alert("현재 비밀번호가 일치하지 않습니다.");
+        return;
+      }
+      const newPwd = prompt("새로 사용할 관리자 비밀번호를 입력해주세요:");
+      if (!newPwd || newPwd.trim().length === 0) {
+        alert("비밀번호를 입력해야 합니다.");
+        return;
+      }
+      localStorage.setItem('megagen_admin_pwd', newPwd.trim());
+      alert("관리자 비밀번호가 성공적으로 변경되었습니다.");
+    }
+
+    // 탭 전환
+    function switchTab(tabId) {
+      ['tabRegister', 'tabVideos', 'tabCategories'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      ['btnTabRegister', 'btnTabVideos', 'btnTabCategories'].forEach(id => {
+        document.getElementById(id).className = "tab-btn text-slate-400 hover:text-slate-700 py-3 transition";
+      });
+
+      document.getElementById(tabId).classList.remove('hidden');
+
+      if (tabId === 'tabRegister') {
+        document.getElementById('btnTabRegister').className = "tab-btn text-sky-600 border-b-2 border-sky-600 py-3 transition";
+        renderCategoryOptions();
+      } else if (tabId === 'tabVideos') {
+        document.getElementById('btnTabVideos').className = "tab-btn text-sky-600 border-b-2 border-sky-600 py-3 transition";
+        renderVideoList();
+      } else if (tabId === 'tabCategories') {
+        document.getElementById('btnTabCategories').className = "tab-btn text-sky-600 border-b-2 border-sky-600 py-3 transition";
+        renderCategoryList();
+      }
+    }
+
+    // 카테고리 옵션 주입 (등록 폼용)
+    function renderCategoryOptions() {
+      const sel = document.getElementById('videoCat');
+      sel.innerHTML = "";
+      categories.forEach(cat => {
+        sel.innerHTML += `<option value="${cat}">${cat}</option>`;
+      });
+    }
+
+    // 영상 목록 렌더링
+    function renderVideoList() {
+      const container = document.getElementById('videoListContainer');
+      document.getElementById('videoTotalCount').innerText = `총 ${videos.length}개`;
+      container.innerHTML = "";
+
+      if(videos.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 py-6 text-center">등록된 영상이 없습니다.</p>`;
+        return;
+      }
+
+      videos.forEach((v, idx) => {
+        container.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 overflow-hidden">
+              <span class="text-slate-400 font-mono font-semibold w-5 text-center text-xs">${idx + 1}</span>
+              <div class="w-12 h-8 rounded bg-slate-200 overflow-hidden flex-shrink-0">
+                ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">🔒</div>`}
+              </div>
+              <div class="truncate">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-semibold text-sky-600 bg-sky-50 px-1.5 rounded">${v.category}</span>
+                  <span class="font-bold text-slate-800 text-xs truncate">${v.title}</span>
+                </div>
+                <span class="text-[11px] text-slate-400 block truncate">${v.desc || '설명 없음'}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <button onclick="moveVideo(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-chevron-up text-[10px]"></i>
+              </button>
+              <button onclick="moveVideo(${idx}, 1)" ${idx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+              <button onclick="toggleVideoStatus(${idx})" title="공개/잠금 전환" class="px-2 py-1 text-[10px] font-semibold rounded-lg border ${v.status === 'active' ? 'bg-emerald-50 text-emerald-600 border-emerald-200' : 'bg-slate-100 text-slate-500 border-slate-200'}">
+                ${v.status === 'active' ? '공개' : '잠금'}
+              </button>
+              <button onclick="deleteVideo(${idx})" title="삭제" class="w-7 h-7 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 flex items-center justify-center text-rose-500 transition ml-1">
+                <i class="fa-solid fa-trash-can text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 영상 관리 액션
+    function moveVideo(idx, dir) {
+      const target = idx + dir;
+      if (target < 0 || target >= videos.length) return;
+      const tmp = videos[idx];
+      videos[idx] = videos[target];
+      videos[target] = tmp;
+      saveVideos();
+      renderVideoList();
+    }
+
+    function toggleVideoStatus(idx) {
+      videos[idx].status = videos[idx].status === 'active' ? 'locked' : 'active';
+      saveVideos();
+      renderVideoList();
+    }
+
+    function deleteVideo(idx) {
+      if (confirm(`'${videos[idx].title}' 영상을 삭제하시겠습니까?`)) {
+        videos.splice(idx, 1);
+        saveVideos();
+        renderVideoList();
+      }
+    }
+
+    function addVideo() {
+      const rawUrl = document.getElementById('videoUrl').value.trim();
+      const yt = getYouTubeInfo(rawUrl);
+
+      const title = document.getElementById('videoTitle').value.trim();
+      if(!title) {
+        alert("영상 제목을 입력해주세요.");
+        return;
+      }
+
+      const newV = {
+        id: Date.now(),
+        category: document.getElementById('videoCat').value,
+        title: title,
+        desc: document.getElementById('videoDesc').value.trim(),
+        status: document.getElementById('videoStatus').value,
+        videoUrl: yt.embedUrl || rawUrl,
+        thumbUrl: yt.thumbUrl,
+        downloadUrl: document.getElementById('downloadUrl').value.trim(),
+        shareMsg: document.getElementById('shareMsg').value.trim()
+      };
+
+      videos.unshift(newV);
+      saveVideos();
+      alert("영상이 성공적으로 등록되었습니다!");
+
+      // 입력란 리셋
+      document.getElementById('videoTitle').value = "";
+      document.getElementById('videoDesc').value = "";
+      document.getElementById('videoUrl').value = "";
+      document.getElementById('downloadUrl').value = "";
+      document.getElementById('shareMsg').value = "";
+      switchTab('tabVideos');
+    }
+
+    function saveVideos() {
+      localStorage.setItem('megagen_videos', JSON.stringify(videos));
+    }
+
+    // 카테고리 관리 목록 렌더링
+    function renderCategoryList() {
+      const container = document.getElementById('categoryListContainer');
+      container.innerHTML = "";
+
+      categories.forEach((cat, idx) => {
+        container.innerHTML += `
+          <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="text-slate-400 font-mono font-semibold text-xs w-5 text-center">${idx + 1}</span>
+              <span class="text-xs font-bold text-slate-800">${cat}</span>
+            </div>
+
+            <div class="flex items-center gap-1">
+              <button onclick="moveCategory(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-chevron-up text-[10px]"></i>
+              </button>
+              <button onclick="moveCategory(${idx}, 1)" ${idx === categories.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+              </button>
+              <button onclick="editCategory(${idx})" title="이름 수정" class="px-2.5 py-1 text-[11px] font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-100">
+                수정
+              </button>
+              <button onclick="deleteCategory(${idx})" title="삭제" class="w-7 h-7 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 flex items-center justify-center text-rose-500 transition ml-1">
+                <i class="fa-solid fa-trash-can text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 카테고리 액션
+    function addCategory() {
+      const input = document.getElementById('newCategoryName');
+      const val = input.value.trim();
+      if (!val) {
+        alert("카테고리 이름을 입력해주세요.");
+        return;
+      }
+      if (categories.includes(val)) {
+        alert("이미 존재하는 카테고리입니다.");
+        return;
+      }
+      categories.push(val);
+      saveCategories();
+      input.value = "";
+      renderCategoryList();
+      alert(`'${val}' 카테고리가 추가되었습니다.`);
+    }
+
+    function editCategory(idx) {
+      const current = categories[idx];
+      const newVal = prompt("수정할 카테고리 이름을 입력하세요:", current);
+      if (!newVal || newVal.trim() === "" || newVal.trim() === current) return;
+
+      const trimmed = newVal.trim();
+      // 기존 영상들의 카테고리 명칭도 일괄 업데이트
+      videos.forEach(v => {
+        if (v.category === current) v.category = trimmed;
+      });
+      categories[idx] = trimmed;
+      saveCategories();
+      saveVideos();
+      renderCategoryList();
+    }
+
+    function deleteCategory(idx) {
+      const target = categories[idx];
+      if (confirm(`'${target}' 카테고리를 삭제하시겠습니까?\n해당 카테고리에 속한 영상들의 카테고리 분류가 초기화될 수 있습니다.`)) {
+        categories.splice(idx, 1);
+        saveCategories();
+        renderCategoryList();
+      }
+    }
+
+    function moveCategory(idx, dir) {
+      const target = idx + dir;
+      if (target < 0 || target >= categories.length) return;
+      const tmp = categories[idx];
+      categories[idx] = categories[target];
+      categories[target] = tmp;
+      saveCategories();
+      renderCategoryList();
+    }
+
+    function saveCategories() {
+      localStorage.setItem('megagen_categories', JSON.stringify(categories));
+    }
+
+    function initAdminData() {
+      renderCategoryOptions();
+      renderVideoList();
+      renderCategoryList();
+    }
+
+    // 페이지 로드 시 로그인 상태 체크
+    checkLoginStatus();
+  </script>
+</body>
+</html>
