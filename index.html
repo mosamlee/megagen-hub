@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEGAGEN Video Hub</title>
+  <title>MEGAGEN 미디어 라운지</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -17,10 +17,12 @@
   <!-- 네비게이션 헤더 -->
   <header class="border-b border-slate-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 w-full">
     <div class="w-full px-8 xl:px-12 h-24 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-4 hover:opacity-90 transition cursor-pointer">
-        <span class="text-3xl font-black tracking-tight text-sky-600">MEGAGEN</span>
-        <span class="text-slate-300 font-light text-2xl">|</span>
-        <span class="text-xl font-bold text-slate-800 tracking-tight">국내영업 비디오 허브</span>
+      
+      <!-- 신규 CI 로고 + 미디어 라운지 타이틀 (클릭 시 홈 이동) -->
+      <a href="index.html" class="flex items-center gap-3.5 hover:opacity-90 transition cursor-pointer">
+        <img src="megagen_logo.png" alt="MEGAGEN" class="h-9 w-auto object-contain" onerror="this.onerror=null; this.src='images/megagen_logo.png';">
+        <span class="text-slate-200 font-light text-2xl">|</span>
+        <span class="text-xl font-bold text-slate-800 tracking-tight">국내영업 미디어 라운지</span>
       </a>
 
       <div class="flex items-center gap-5">
@@ -43,7 +45,7 @@
   <!-- 메인 레이아웃 -->
   <main class="w-full px-8 xl:px-12 py-10 space-y-12">
     
-    <!-- 1. 홈 화면 고정 영상 섹션 -->
+    <!-- 1. 홈 화면 고정(Pinned) 영상 섹션 -->
     <section id="pinnedSection" class="hidden">
       <div class="flex items-center gap-2 mb-6 border-b border-slate-100 pb-3">
         <span class="w-2.5 h-6 bg-sky-600 rounded-full inline-block"></span>
@@ -164,7 +166,6 @@
       });
     }
 
-    // 카드 HTML 생성 함수 (따옴표 및 줄바꿈 오류 방지: id로 직접 참조)
     function createCardHTML(v, isPinnedBadge = false) {
       if(v.status === 'locked') {
         return `
@@ -183,11 +184,10 @@
 
       return `
         <div class="video-card group flex flex-col justify-between relative bg-white border border-slate-100 rounded-2xl p-3 hover:border-slate-200 hover:shadow-md transition duration-300">
-          <!-- 썸네일 -->
           <div class="aspect-video w-full rounded-xl overflow-hidden relative bg-slate-100 cursor-pointer mb-3.5 shadow-sm" onclick="playVideoById(${v.id})">
             <img src="${v.thumbUrl || 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80'}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition duration-300 flex items-center justify-center">
-              <div class="w-14 h-14 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-xl transform group-hover:scale-110 transition duration-300">
+              <div class="w-12 h-12 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-xl transform group-hover:scale-110 transition duration-300">
                 <i class="fa-solid fa-play ml-0.5 text-base text-sky-600"></i>
               </div>
             </div>
@@ -198,23 +198,19 @@
             ` : ''}
           </div>
 
-          <!-- 텍스트 설명 -->
           <div class="px-1 mb-4 flex-1">
             <span class="text-xs font-semibold text-sky-600 tracking-tight">${v.category}</span>
             <h3 class="text-base font-bold text-slate-900 mt-1 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
             <p class="text-sm text-slate-500 mt-1 line-clamp-1 font-normal">${v.desc || ''}</p>
           </div>
 
-          <!-- 3분할 텍스트 버튼 바 (ID 기반 호출로 특수문자 오류 원천 방지) -->
           <div class="grid grid-cols-3 gap-1.5 pt-3 border-t border-slate-100">
             <button onclick="playVideoById(${v.id})" class="py-2 px-1 bg-sky-50 hover:bg-sky-600 text-sky-700 hover:text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
               <i class="fa-solid fa-play text-[10px]"></i> 바로보기
             </button>
-            
             <button onclick="shareKakaoById(${v.id})" class="py-2 px-1 bg-amber-50 hover:bg-amber-400 text-amber-900 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
               <i class="fa-solid fa-comment text-[11px]"></i> 카톡 전송
             </button>
-            
             <a href="${v.downloadUrl || v.videoUrl}" download class="py-2 px-1 bg-slate-50 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 text-center">
               <i class="fa-solid fa-arrow-down text-[10px]"></i> 다운로드
             </a>
@@ -290,7 +286,6 @@
       document.getElementById('videoModal').classList.add('hidden');
     }
 
-    // 영상 ID를 기반으로 텍스트를 찾아 클립보드 복사 및 팝업 안내 (어떤 특수문자나 줄바꿈도 100% 정상 작동)
     function shareKakaoById(id) {
       const v = videos.find(item => item.id === id);
       if(!v) return;
@@ -300,7 +295,6 @@
       const msg = v.shareMsg ? v.shareMsg.trim() : `[${title}]`;
       const copyText = `${msg}\n\n▶ 영상 링크: ${url}`;
 
-      // 최신 Clipboard API 및 레거시 Fallback 지원
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(copyText).then(() => {
           alert(`[원장님 전송용 메시지 복사 완료]\n\n${copyText}\n\n카카오톡 대화방에 붙여넣기 하시면 됩니다.`);
