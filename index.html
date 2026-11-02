@@ -14,64 +14,73 @@
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
 
-  <!-- 네비게이션 헤더 -->
-  <header class="border-b border-slate-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 w-full">
-    <div class="w-full px-8 xl:px-12 h-24 flex items-center justify-between">
+  <!-- 반응형 네비게이션 헤더 -->
+  <header class="border-b border-slate-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 w-full shadow-sm">
+    <div class="w-full px-4 sm:px-8 xl:px-12 py-3.5 sm:py-0 sm:h-24 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
       
-      <!-- 신규 CI 로고 + 미디어 라운지 타이틀 -->
-      <a href="index.html" class="flex items-center gap-3.5 hover:opacity-90 transition cursor-pointer">
-        <img src="megagen_logo.png" alt="MEGAGEN" class="h-9 w-auto object-contain" onerror="this.onerror=null; this.src='images/megagen_logo.png';">
-        <span class="text-slate-200 font-light text-2xl">|</span>
-        <span class="text-xl font-bold text-slate-800 tracking-tight">국내영업 미디어 라운지</span>
-      </a>
+      <!-- 상단: 로고 및 타이틀 (모바일 줄바꿈 방지) -->
+      <div class="flex items-center justify-between w-full sm:w-auto">
+        <a href="index.html" class="flex items-center gap-2 sm:gap-3.5 hover:opacity-90 transition cursor-pointer">
+          <img src="megagen_logo.png" alt="MEGAGEN" class="h-6 sm:h-8 md:h-9 w-auto object-contain" onerror="this.onerror=null; this.src='images/megagen_logo.png';">
+          <span class="text-slate-200 font-light text-lg sm:text-2xl">|</span>
+          <span class="text-base sm:text-lg md:text-xl font-bold text-slate-800 tracking-tight whitespace-nowrap">국내영업 미디어 라운지</span>
+        </a>
+        
+        <!-- 모바일 전용 미니 관리자 링크 (공간 절약) -->
+        <a href="admin.html" class="sm:hidden px-3 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-1.5 shadow-sm">
+          <i class="fa-solid fa-gear"></i> 관리자
+        </a>
+      </div>
 
-      <div class="flex items-center gap-5">
-        <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+      <!-- 하단/우측: 검색창 및 PC 관리자 버튼 -->
+      <div class="flex items-center gap-3 w-full sm:w-auto">
+        <div class="relative flex-1 sm:w-72 xl:w-96">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs sm:text-sm"></i>
           <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="제품, 술식, 원장님 검색..." 
-            class="pl-11 pr-5 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm w-72 xl:w-96 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+            class="w-full pl-9 sm:pl-11 pr-4 py-2 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-full text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
         </div>
-        <a href="admin.html" class="px-5 py-2.5 text-sm font-semibold text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition flex items-center gap-2 shadow-sm">
+        <!-- PC 전용 관리자 버튼 -->
+        <a href="admin.html" class="hidden sm:flex px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition items-center gap-2 shadow-sm whitespace-nowrap">
           <i class="fa-solid fa-gear"></i> 관리자
         </a>
       </div>
     </div>
 
-    <!-- 카테고리 탭 (노출 설정된 카테고리만 동적 렌더링) -->
-    <div id="categoryNav" class="w-full px-8 xl:px-12 flex gap-10 text-lg font-medium overflow-x-auto scrollbar-none border-t border-slate-100">
+    <!-- 카테고리 탭 (모바일 좌우 부드러운 스크롤 지원) -->
+    <div id="categoryNav" class="w-full px-4 sm:px-8 xl:px-12 flex gap-6 sm:gap-10 text-sm sm:text-lg font-medium overflow-x-auto scrollbar-none border-t border-slate-100">
     </div>
   </header>
 
   <!-- 메인 레이아웃 -->
-  <main class="w-full px-8 xl:px-12 py-10 space-y-12">
+  <main class="w-full px-4 sm:px-8 xl:px-12 py-6 sm:py-10 space-y-8 sm:space-y-12">
     
-    <!-- 1. 홈 화면 고정(Pinned) 영상 섹션 -->
+    <!-- 1. 홈 화면 고정 영상 섹션 -->
     <section id="pinnedSection" class="hidden">
-      <div class="flex items-center gap-2 mb-6 border-b border-slate-100 pb-3">
-        <span class="w-2.5 h-6 bg-sky-600 rounded-full inline-block"></span>
-        <h2 class="text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+      <div class="flex items-center gap-2 mb-4 sm:mb-6 border-b border-slate-100 pb-2.5">
+        <span class="w-2 sm:w-2.5 h-5 sm:h-6 bg-sky-600 rounded-full inline-block"></span>
+        <h2 class="text-base sm:text-xl font-bold text-slate-900 tracking-tight flex items-center gap-1.5 sm:gap-2">
           <span>⭐</span> 주요 추천 영상
         </h2>
-        <span class="text-xs text-sky-600 font-semibold bg-sky-50 px-2.5 py-1 rounded-full ml-1">상시 노출</span>
+        <span class="text-[10px] sm:text-xs text-sky-600 font-semibold bg-sky-50 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full ml-1">상시 노출</span>
       </div>
-      <div id="pinnedGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-8 xl:gap-10">
+      <div id="pinnedGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5 sm:gap-8 xl:gap-10">
       </div>
     </section>
 
     <!-- 2. 일반 영상 카드 그리드 -->
     <section>
-      <div id="sectionTitle" class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+      <div id="sectionTitle" class="text-base sm:text-xl font-bold text-slate-900 mb-4 sm:mb-6 flex items-center gap-2">
         <span>전체 영상</span>
       </div>
-      <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-8 xl:gap-10">
+      <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5 sm:gap-8 xl:gap-10">
       </div>
     </section>
   </main>
 
   <!-- 비디오 스트리밍 모달 -->
-  <div id="videoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-black rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl relative">
-      <button onclick="closeModal()" class="absolute top-5 right-6 text-white/70 hover:text-white text-3xl z-20 transition">
+  <div id="videoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-black rounded-2xl sm:rounded-3xl w-full max-w-5xl overflow-hidden shadow-2xl relative">
+      <button onclick="closeModal()" class="absolute top-4 right-5 sm:top-5 sm:right-6 text-white/70 hover:text-white text-2xl sm:text-3xl z-20 transition">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="aspect-video w-full">
@@ -167,17 +176,16 @@
     let videos = JSON.parse(localStorage.getItem('megagen_videos')) || initialVideos;
     let currentCategory = "전체";
 
-    // 메인 상단 카테고리 탭 (isVisible === true 인 카테고리만 노출)
     function renderCategoryNav() {
       const nav = document.getElementById('categoryNav');
       nav.innerHTML = `
-        <button onclick="filterCategory('전체')" class="category-btn ${currentCategory === '전체' ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3.5 transition pt-3 whitespace-nowrap text-lg" data-cat="전체">전체</button>
+        <button onclick="filterCategory('전체')" class="category-btn ${currentCategory === '전체' ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-2.5 sm:pb-3.5 transition pt-2 sm:pt-3 whitespace-nowrap text-sm sm:text-lg" data-cat="전체">전체</button>
       `;
 
       categories.filter(c => c.isVisible !== false).forEach(cat => {
         const isActive = currentCategory === cat.name;
         nav.innerHTML += `
-          <button onclick="filterCategory('${cat.name}')" class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-3.5 transition pt-3 whitespace-nowrap text-lg" data-cat="${cat.name}">${cat.name}</button>
+          <button onclick="filterCategory('${cat.name}')" class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-2.5 sm:pb-3.5 transition pt-2 sm:pt-3 whitespace-nowrap text-sm sm:text-lg" data-cat="${cat.name}">${cat.name}</button>
         `;
       });
     }
@@ -186,49 +194,49 @@
       if(v.status === 'locked') {
         return `
           <div class="video-card bg-slate-50/70 rounded-2xl border border-dashed border-slate-200 aspect-video-box relative overflow-hidden group">
-            <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-              <div class="w-12 h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 mb-3 shadow-sm">
-                <i class="fa-solid fa-lock text-base"></i>
+            <div class="absolute inset-0 flex flex-col items-center justify-center p-4 sm:p-6 text-center">
+              <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 mb-2 sm:mb-3 shadow-sm">
+                <i class="fa-solid fa-lock text-sm sm:text-base"></i>
               </div>
-              <span class="text-xs font-bold text-sky-600 uppercase tracking-widest mb-1.5">${v.category}</span>
-              <h4 class="text-base font-bold text-slate-700 line-clamp-1">${v.title}</h4>
-              <p class="text-sm text-slate-400 mt-1.5">콘텐츠 오픈 준비 중입니다</p>
+              <span class="text-[10px] sm:text-xs font-bold text-sky-600 uppercase tracking-widest mb-1">${v.category}</span>
+              <h4 class="text-sm sm:text-base font-bold text-slate-700 line-clamp-1">${v.title}</h4>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1">콘텐츠 오픈 준비 중입니다</p>
             </div>
           </div>
         `;
       }
 
       return `
-        <div class="video-card group flex flex-col justify-between relative bg-white border border-slate-100 rounded-2xl p-3 hover:border-slate-200 hover:shadow-md transition duration-300">
-          <div class="aspect-video w-full rounded-xl overflow-hidden relative bg-slate-100 cursor-pointer mb-3.5 shadow-sm" onclick="playVideoById(${v.id})">
+        <div class="video-card group flex flex-col justify-between relative bg-white border border-slate-100 rounded-2xl p-2.5 sm:p-3 hover:border-slate-200 hover:shadow-md transition duration-300">
+          <div class="aspect-video w-full rounded-xl overflow-hidden relative bg-slate-100 cursor-pointer mb-2.5 sm:mb-3.5 shadow-sm" onclick="playVideoById(${v.id})">
             <img src="${v.thumbUrl || 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80'}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
             <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition duration-300 flex items-center justify-center">
-              <div class="w-14 h-14 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-xl transform group-hover:scale-110 transition duration-300">
-                <i class="fa-solid fa-play ml-0.5 text-base text-sky-600"></i>
+              <div class="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center text-slate-900 shadow-xl transform group-hover:scale-110 transition duration-300">
+                <i class="fa-solid fa-play ml-0.5 text-xs sm:text-base text-sky-600"></i>
               </div>
             </div>
             ${isPinnedBadge ? `
-              <span class="absolute top-2.5 left-2.5 bg-sky-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-md shadow-md flex items-center gap-1">
-                <i class="fa-solid fa-thumbtack text-[9px]"></i> 추천 고정
+              <span class="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 bg-sky-600 text-white text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md shadow-md flex items-center gap-1">
+                <i class="fa-solid fa-thumbtack text-[8px] sm:text-[9px]"></i> 추천 고정
               </span>
             ` : ''}
           </div>
 
-          <div class="px-1 mb-4 flex-1">
-            <span class="text-xs font-semibold text-sky-600 tracking-tight">${v.category}</span>
-            <h3 class="text-base font-bold text-slate-900 mt-1 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
-            <p class="text-sm text-slate-500 mt-1 line-clamp-1 font-normal">${v.desc || ''}</p>
+          <div class="px-1 mb-3 sm:mb-4 flex-1">
+            <span class="text-[11px] sm:text-xs font-semibold text-sky-600 tracking-tight">${v.category}</span>
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 mt-0.5 sm:mt-1 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1 line-clamp-1 font-normal">${v.desc || ''}</p>
           </div>
 
-          <div class="grid grid-cols-3 gap-1.5 pt-3 border-t border-slate-100">
-            <button onclick="playVideoById(${v.id})" class="py-2 px-1 bg-sky-50 hover:bg-sky-600 text-sky-700 hover:text-white rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
-              <i class="fa-solid fa-play text-[10px]"></i> 바로보기
+          <div class="grid grid-cols-3 gap-1 sm:gap-1.5 pt-2.5 sm:pt-3 border-t border-slate-100">
+            <button onclick="playVideoById(${v.id})" class="py-2 px-1 bg-sky-50 hover:bg-sky-600 text-sky-700 hover:text-white rounded-lg text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1">
+              <i class="fa-solid fa-play text-[9px] sm:text-[10px]"></i> 바로보기
             </button>
-            <button onclick="shareKakaoById(${v.id})" class="py-2 px-1 bg-amber-50 hover:bg-amber-400 text-amber-900 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1">
-              <i class="fa-solid fa-comment text-[11px]"></i> 카톡 전송
+            <button onclick="shareKakaoById(${v.id})" class="py-2 px-1 bg-amber-50 hover:bg-amber-400 text-amber-900 rounded-lg text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1">
+              <i class="fa-solid fa-comment text-[10px] sm:text-[11px]"></i> 카톡 전송
             </button>
-            <a href="${v.downloadUrl || v.videoUrl}" download class="py-2 px-1 bg-slate-50 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1 text-center">
-              <i class="fa-solid fa-arrow-down text-[10px]"></i> 다운로드
+            <a href="${v.downloadUrl || v.videoUrl}" download class="py-2 px-1 bg-slate-50 hover:bg-slate-200 text-slate-700 rounded-lg text-[11px] sm:text-xs font-bold transition flex items-center justify-center gap-1 text-center">
+              <i class="fa-solid fa-arrow-down text-[9px] sm:text-[10px]"></i> 다운로드
             </a>
           </div>
         </div>
@@ -264,9 +272,9 @@
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full py-24 text-center text-slate-400">
-            <i class="fa-regular fa-folder-open text-4xl mb-4 block"></i>
-            <span class="text-base">등록된 영상이 없습니다.</span>
+          <div class="col-span-full py-16 sm:py-24 text-center text-slate-400">
+            <i class="fa-regular fa-folder-open text-3xl sm:text-4xl mb-3 sm:mb-4 block"></i>
+            <span class="text-sm sm:text-base">등록된 영상이 없습니다.</span>
           </div>
         `;
         return;
