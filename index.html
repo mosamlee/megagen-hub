@@ -14,50 +14,50 @@
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
 
-  <!-- 네비게이션 헤더 (White Minimal) -->
-  <header class="border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-md z-30">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+  <!-- 네비게이션 헤더 (100% Full Width) -->
+  <header class="border-b border-slate-100 sticky top-0 bg-white/95 backdrop-blur-md z-30 w-full">
+    <div class="w-full px-8 xl:px-12 h-20 flex items-center justify-between">
       
       <!-- 브랜드 로고 및 타이틀 -->
       <div class="flex items-center gap-4">
-        <span class="text-xl font-black tracking-tight text-sky-600">MEGAGEN</span>
-        <span class="text-slate-300 font-light">|</span>
-        <span class="text-base font-semibold text-slate-700 tracking-tight">국내영업 비디오 허브</span>
+        <span class="text-2xl font-black tracking-tight text-sky-600">MEGAGEN</span>
+        <span class="text-slate-300 font-light text-lg">|</span>
+        <span class="text-lg font-bold text-slate-800 tracking-tight">국내영업 비디오 허브</span>
       </div>
 
-      <!-- 우측 검색 및 관리자 모드 버튼 -->
-      <div class="flex items-center gap-3">
+      <!-- 검색바 및 관리자 버튼 -->
+      <div class="flex items-center gap-4">
         <div class="relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
           <input type="text" id="searchInput" onkeyup="filterCards()" placeholder="제품, 술식, 원장님 검색..." 
-            class="pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs w-48 sm:w-64 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+            class="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-xs w-64 xl:w-80 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
         </div>
-        <button onclick="toggleAdminModal()" class="px-3.5 py-2 text-xs font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition flex items-center gap-1.5">
+        <button onclick="toggleAdminModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-sky-600 hover:bg-slate-50 rounded-full border border-slate-200 transition flex items-center gap-1.5 shadow-sm">
           <i class="fa-solid fa-gear"></i> 관리자
         </button>
       </div>
     </div>
 
-    <!-- 6대 카테고리 탭 (넘버링 제거) -->
-    <div class="max-w-7xl mx-auto px-6 flex gap-8 text-sm font-medium overflow-x-auto scrollbar-none">
-      <button onclick="filterCategory('전체')" class="category-btn text-sky-600 border-b-2 border-sky-600 pb-3 font-semibold transition" data-cat="전체">전체</button>
-      <button onclick="filterCategory('신제품')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="신제품">신제품</button>
-      <button onclick="filterCategory('임플란트 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="임플란트 솔루션">임플란트 솔루션</button>
-      <button onclick="filterCategory('디지털 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="디지털 솔루션">디지털 솔루션</button>
-      <button onclick="filterCategory('바이오레이즈 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="바이오레이즈 솔루션">바이오레이즈 솔루션</button>
-      <button onclick="filterCategory('엔도 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="엔도 솔루션">엔도 솔루션</button>
-      <button onclick="filterCategory('장비 및 재료·재생')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition" data-cat="장비 및 재료·재생">장비 및 재료·재생</button>
+    <!-- 6대 카테고리 탭 (넘버링 제외, 풀폭 정렬) -->
+    <div class="w-full px-8 xl:px-12 flex gap-8 text-sm font-medium overflow-x-auto scrollbar-none border-t border-slate-50">
+      <button onclick="filterCategory('전체')" class="category-btn text-sky-600 border-b-2 border-sky-600 pb-3 font-bold transition pt-2" data-cat="전체">전체</button>
+      <button onclick="filterCategory('신제품')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="신제품">신제품</button>
+      <button onclick="filterCategory('임플란트 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="임플란트 솔루션">임플란트 솔루션</button>
+      <button onclick="filterCategory('디지털 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="디지털 솔루션">디지털 솔루션</button>
+      <button onclick="filterCategory('바이오레이즈 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="바이오레이즈 솔루션">바이오레이즈 솔루션</button>
+      <button onclick="filterCategory('엔도 솔루션')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="엔도 솔루션">엔도 솔루션</button>
+      <button onclick="filterCategory('장비 및 재료·재생')" class="category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2" data-cat="장비 및 재료·재생">장비 및 재료·재생</button>
     </div>
   </header>
 
-  <!-- 메인 비디오 카드 그리드 -->
-  <main class="max-w-7xl mx-auto px-6 py-12">
-    <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      <!-- 카드가 스크립트에 의해 동적으로 렌더링됩니다 -->
+  <!-- 메인 비디오 카드 그리드 (화면 전폭 반응형: 와이드 화면 시 5~6열 확장) -->
+  <main class="w-full px-8 xl:px-12 py-10">
+    <div id="videoGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-6 xl:gap-8">
+      <!-- 스크립트로 렌더링 -->
     </div>
   </main>
 
-  <!-- 스트리밍 비디오 모달 팝업 -->
+  <!-- 비디오 스트리밍 모달 -->
   <div id="videoModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-black rounded-2xl w-full max-w-4xl overflow-hidden shadow-2xl relative">
       <button onclick="closeModal()" class="absolute top-4 right-5 text-white/70 hover:text-white text-2xl z-20 transition">
@@ -76,25 +76,25 @@
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <!-- 1단계: 마스터 핀번호 확인 (초기 비밀번호: 1234) -->
+      <!-- 1단계: PIN 번호 (1234) -->
       <div id="adminAuthSection">
         <h3 class="text-lg font-bold text-slate-900 tracking-tight">관리자 인증</h3>
-        <p class="text-xs text-slate-500 mt-1">콘텐츠를 등록·관리하려면 핀번호를 입력하세요.</p>
+        <p class="text-xs text-slate-500 mt-1">콘텐츠를 등록·관리하려면 PIN 번호를 입력하세요.</p>
         <div class="mt-6 flex gap-2">
           <input type="password" id="adminPin" placeholder="PIN 번호 (기본: 1234)" class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-sky-500">
           <button onclick="checkAdminAuth()" class="px-5 py-2.5 bg-sky-600 hover:bg-sky-700 text-white font-medium rounded-xl text-sm transition">확인</button>
         </div>
       </div>
 
-      <!-- 2단계: 신규 콘텐츠 등록 폼 -->
-      <div id="adminFormSection" class="hidden space-y-4">
+      <!-- 2단계: 신규 콘텐츠 등록 폼 (추천 8개 항목 전체 탑재) -->
+      <div id="adminFormSection" class="hidden space-y-3.5 max-h-[75vh] overflow-y-auto pr-1">
         <div>
-          <h3 class="text-lg font-bold text-slate-900 tracking-tight">새 영상 콘텐츠 등록</h3>
-          <p class="text-xs text-slate-500 mt-0.5">등록된 영상은 브라우저에 즉시 배포되어 노출됩니다.</p>
+          <h3 class="text-base font-bold text-slate-900 tracking-tight">새 영상 콘텐츠 등록</h3>
+          <p class="text-xs text-slate-500">등록 즉시 비디오 허브 화면에 배포됩니다.</p>
         </div>
         
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">카테고리</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">카테고리</label>
           <select id="newCat" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
             <option value="신제품">신제품</option>
             <option value="임플란트 솔루션">임플란트 솔루션</option>
@@ -106,48 +106,57 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">영상 제목</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">영상 제목</label>
           <input type="text" id="newTitle" placeholder="예: [신제품] ARi 전치부 솔루션 런칭" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">한 줄 설명</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">한 줄 설명</label>
           <input type="text" id="newDesc" placeholder="예: 치조골 흡수가 심한 전치부 극복 프로토콜" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">재생시간</label>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">재생시간</label>
             <input type="text" id="newDuration" placeholder="예: 02:15" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">상태</label>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">공개 상태</label>
             <select id="newStatus" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
               <option value="active">즉시 공개</option>
-              <option value="locked">오픈 예정 (잠금)</option>
+              <option value="locked">오픈 예정 (잠금 표시)</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">영상 재생 URL (유튜브 임베드 링크 or 영상 링크)</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">영상 재생 URL (유튜브 임베드 링크)</label>
           <input type="text" id="newVideoUrl" placeholder="https://www.youtube.com/embed/GpXyohF9GxY" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">썸네일 이미지 URL (비워둘 시 기본 그래디언트)</label>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">다운로드 파일 URL (구글 드라이브 / MP4 직링크)</label>
+          <input type="text" id="newDownloadUrl" placeholder="https://drive.google.com/..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">카톡 공유 추천 멘트</label>
+          <input type="text" id="newShareMsg" placeholder="원장님, 문의주신 전치부 식립 솔루션 영상(2분) 공유드립니다." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">썸네일 이미지 URL</label>
           <input type="text" id="newThumbUrl" placeholder="https://images.unsplash.com/..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
         </div>
 
-        <div class="pt-2 flex gap-2">
-          <button onclick="registerVideo()" class="flex-1 py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-xs transition">콘텐츠 등록 완료</button>
+        <div class="pt-2">
+          <button onclick="registerVideo()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-semibold rounded-xl text-xs transition">콘텐츠 등록 완료</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // 기본 초기 영상 데이터 (화이트 미니멀 규격)
     const defaultVideos = [
       {
         id: 1,
@@ -157,7 +166,9 @@
         duration: "02:15",
         status: "active",
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-        thumbUrl: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=80"
+        thumbUrl: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=80",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 문의주신 ARi 전치부 식립 솔루션 영상 공유드립니다."
       },
       {
         id: 2,
@@ -167,7 +178,9 @@
         duration: "03:10",
         status: "active",
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-        thumbUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&auto=format&fit=crop&q=80"
+        thumbUrl: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&auto=format&fit=crop&q=80",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, R2i5 구강스캐너 실시간 핸즈온 영상 공유드립니다."
       },
       {
         id: 3,
@@ -177,17 +190,21 @@
         duration: "03:45",
         status: "active",
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-        thumbUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80"
+        thumbUrl: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 박광범 원장의 임플란트 수술방 하이라이트 영상 공유드립니다."
       },
       {
         id: 4,
         category: "임플란트 솔루션",
         title: "Molar Immediate 구치부 발치즉시 식립",
-        desc: "BD Cuff를 활용한 연조직 보존 및 Crestal Bone Loss 방지",
+        desc: "BD Cuff를 활용한 연조직 보존 및 Bone Loss 방지",
         duration: "04:10",
         status: "locked",
         videoUrl: "",
-        thumbUrl: ""
+        thumbUrl: "",
+        downloadUrl: "",
+        shareMsg: ""
       },
       {
         id: 5,
@@ -197,15 +214,15 @@
         duration: "05:12",
         status: "active",
         videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-        thumbUrl: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80"
+        thumbUrl: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&auto=format&fit=crop&q=80",
+        downloadUrl: "https://youtu.be/GpXyohF9GxY",
+        shareMsg: "원장님, 워터레이저 최소침습 진료실 도입 가이드 영상 공유드립니다."
       }
     ];
 
-    // 로컬 스토리지 데이터 로드
     let videos = JSON.parse(localStorage.getItem('megagen_videos')) || defaultVideos;
     let currentCategory = "전체";
 
-    // 카드 그리드 렌더링
     function renderGrid() {
       const grid = document.getElementById('videoGrid');
       grid.innerHTML = "";
@@ -214,9 +231,8 @@
 
       filtered.forEach(v => {
         if(v.status === 'locked') {
-          // 오픈 예정 (Coming Soon) 미니멀 카드
           grid.innerHTML += `
-            <div class="bg-slate-50/60 rounded-2xl border border-dashed border-slate-200 aspect-video-box relative overflow-hidden group">
+            <div class="bg-slate-50/70 rounded-2xl border border-dashed border-slate-200 aspect-video-box relative overflow-hidden group">
               <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
                 <div class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 mb-3 shadow-sm">
                   <i class="fa-solid fa-lock text-sm"></i>
@@ -228,10 +244,8 @@
             </div>
           `;
         } else {
-          // 정상 화이트 미니멀 비디오 카드
           grid.innerHTML += `
             <div class="group flex flex-col justify-between">
-              <!-- 썸네일 영역 -->
               <div class="aspect-video w-full rounded-2xl overflow-hidden relative bg-slate-100 cursor-pointer mb-3.5 shadow-sm group-hover:shadow-md transition duration-300" onclick="openModal('${v.videoUrl}', '${v.title}')">
                 <img src="${v.thumbUrl || 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&auto=format&fit=crop&q=80'}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                 <div class="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition duration-300 flex items-center justify-center">
@@ -242,23 +256,21 @@
                 <span class="absolute bottom-3 right-3 bg-slate-950/70 backdrop-blur-md text-white text-[11px] font-medium px-2 py-0.5 rounded-md">${v.duration}</span>
               </div>
 
-              <!-- 콘텐츠 타이틀 & 서술 -->
               <div>
                 <span class="text-[11px] font-semibold text-sky-600 tracking-tight">${v.category}</span>
                 <h3 class="text-sm font-bold text-slate-900 mt-0.5 leading-snug group-hover:text-sky-600 transition line-clamp-1">${v.title}</h3>
                 <p class="text-xs text-slate-500 mt-1 line-clamp-1 font-light">${v.desc}</p>
               </div>
 
-              <!-- 하단 미니멀 액션 버튼 -->
               <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                 <button onclick="openModal('${v.videoUrl}', '${v.title}')" class="text-xs font-semibold text-slate-700 hover:text-sky-600 flex items-center gap-1.5 transition">
                   <i class="fa-regular fa-circle-play text-sky-600"></i> 바로보기
                 </button>
                 <div class="flex items-center gap-1">
-                  <button onclick="shareKakao('${v.title}', '${v.videoUrl}')" title="원장님께 카톡 전송" class="w-7 h-7 rounded-full text-slate-400 hover:text-amber-500 hover:bg-amber-50 flex items-center justify-center transition">
+                  <button onclick="shareKakao('${v.title}', '${v.videoUrl}', '${v.shareMsg || ''}')" title="원장님께 카톡 전송" class="w-7 h-7 rounded-full text-slate-400 hover:text-amber-500 hover:bg-amber-50 flex items-center justify-center transition">
                     <i class="fa-solid fa-share-nodes text-xs"></i>
                   </button>
-                  <a href="${v.videoUrl}" download title="로컬 다운로드" class="w-7 h-7 rounded-full text-slate-400 hover:text-sky-600 hover:bg-sky-50 flex items-center justify-center transition">
+                  <a href="${v.downloadUrl || v.videoUrl}" download title="로컬 다운로드" class="w-7 h-7 rounded-full text-slate-400 hover:text-sky-600 hover:bg-sky-50 flex items-center justify-center transition">
                     <i class="fa-solid fa-arrow-down text-xs"></i>
                   </a>
                 </div>
@@ -269,20 +281,18 @@
       });
     }
 
-    // 카테고리 필터링
     function filterCategory(cat) {
       currentCategory = cat;
       document.querySelectorAll('.category-btn').forEach(btn => {
         if(btn.dataset.cat === cat) {
-          btn.className = "category-btn text-sky-600 border-b-2 border-sky-600 pb-3 font-semibold transition";
+          btn.className = "category-btn text-sky-600 border-b-2 border-sky-600 pb-3 font-bold transition pt-2";
         } else {
-          btn.className = "category-btn text-slate-500 hover:text-slate-900 pb-3 transition";
+          btn.className = "category-btn text-slate-500 hover:text-slate-900 pb-3 transition pt-2";
         }
       });
       renderGrid();
     }
 
-    // 검색 필터
     function filterCards() {
       const q = document.getElementById('searchInput').value.toLowerCase();
       document.querySelectorAll('#videoGrid > div').forEach(card => {
@@ -290,7 +300,6 @@
       });
     }
 
-    // 스트리밍 모달 열기/닫기
     function openModal(url, title) {
       if(!url) return;
       document.getElementById('videoIframe').src = url + "?autoplay=1";
@@ -301,14 +310,13 @@
       document.getElementById('videoModal').classList.add('hidden');
     }
 
-    // 카카오톡/링크 복사
-    function shareKakao(title, url) {
-      navigator.clipboard.writeText(url).then(() => {
-        alert(`[원장님 전송용 링크 복사 완료]\n\n제목: ${title}\nURL: ${url}\n\n원장님 카카오톡 대화방에 바로 붙여넣기 하세요.`);
+    function shareKakao(title, url, msg) {
+      const copyText = msg ? `${msg}\n\n▶ 영상 링크: ${url}` : `[${title}]\n▶ 영상 링크: ${url}`;
+      navigator.clipboard.writeText(copyText).then(() => {
+        alert(`[원장님 전송용 메시지 복사 완료]\n\n${copyText}\n\n카카오톡 대화방에 붙여넣기 하시면 됩니다.`);
       });
     }
 
-    // 관리자 모달 제어
     function toggleAdminModal() {
       const modal = document.getElementById('adminModal');
       modal.classList.toggle('hidden');
@@ -326,7 +334,6 @@
       }
     }
 
-    // 새 영상 등록
     function registerVideo() {
       const newVideo = {
         id: Date.now(),
@@ -336,6 +343,8 @@
         duration: document.getElementById('newDuration').value || "02:00",
         status: document.getElementById('newStatus').value,
         videoUrl: document.getElementById('newVideoUrl').value || "https://www.youtube.com/embed/GpXyohF9GxY",
+        downloadUrl: document.getElementById('newDownloadUrl').value,
+        shareMsg: document.getElementById('newShareMsg').value,
         thumbUrl: document.getElementById('newThumbUrl').value
       };
 
@@ -346,7 +355,6 @@
       alert("새 영상이 비디오 허브에 성공적으로 등록되었습니다!");
     }
 
-    // 초기 렌더링
     renderGrid();
   </script>
 </body>
