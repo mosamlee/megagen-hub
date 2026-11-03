@@ -259,7 +259,7 @@
    // 1. 관리자 인증 로직 (로그인 성공 시 상태 저장)
     function verifyLogin() {
       const entered = document.getElementById('adminPasswordInput').value;
-      const storedPw = localStorage.getItem('megagen_admin_pw') || "1234";
+      const storedPw = localStorage.getItem('megagen_admin_pw') || "1775";
 
       if (entered === storedPw) {
         localStorage.setItem('megagen_admin_logged', 'true'); // 로그인 유지 플래그 저장
