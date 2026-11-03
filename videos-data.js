@@ -179,8 +179,7 @@ const initialVideos = [
     thumbUrl: "https://img.youtube.com/vi/g0rlTtDz14E/hqdefault.jpg",
     downloadUrl: "https://youtu.be/g0rlTtDz14E",
     shareMsg: "원장님, GBR 시 신선한 자가골을 간편하고 안전하게 모아주는 Auto-Max 채취 기구 영상 전달드립니다."
-  }
-],
+  },
   
 // ==========================================
   // [엔도 솔루션 - 치근/근관 보존 & PET]
@@ -259,4 +258,5 @@ const initialVideos = [
     thumbUrl: "https://img.youtube.com/vi/2e0K9rLcx_o/hqdefault.jpg",
     downloadUrl: "https://youtu.be/2e0K9rLcx_o",
     shareMsg: "원장님, Root Membrane Kit의 핵심 장점을 30초로 정리한 요약 영상 전달드립니다."
-  };
+  }
+];
