@@ -184,18 +184,8 @@
   </main>
 
   <script>
-    // 기본 카테고리 및 영상 DB
-    const defaultRawCategories = [
-      { name: "신제품", isVisible: true },
-      { name: "임플란트 솔루션", isVisible: true },
-      { name: "디지털 솔루션", isVisible: true },
-      { name: "바이오레이즈 솔루션", isVisible: true },
-      { name: "엔도 솔루션", isVisible: true },
-      { name: "장비 및 재료·재생", isVisible: true }
-    ];
-
-    let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
-   const defaultRawCategories = [
+// 기본 카테고리 정의
+  const defaultRawCategories = [
     { name: "신제품", isVisible: true },
     { name: "임플란트 솔루션", isVisible: true },
     { name: "디지털 솔루션", isVisible: true },
@@ -203,6 +193,29 @@
     { name: "엔도 솔루션", isVisible: true },
     { name: "장비 및 재료·재생", isVisible: true }
   ];
+
+  // 1. 카테고리 복구 및 동기화 (0개면 무조건 기본 카테고리 로드)
+  let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
+  let categories = (savedCats && savedCats.length > 0)
+    ? savedCats.map(c => typeof c === 'string' ? { name: c, isVisible: true } : { name: c.name, isVisible: c.isVisible !== false })
+    : defaultRawCategories;
+  localStorage.setItem('megagen_categories', JSON.stringify(categories));
+
+  // 2. 영상 데이터 복구 및 동기화 (0개면 videos-data.js의 initialVideos로 자동 로드)
+  let savedVideos = JSON.parse(localStorage.getItem('megagen_videos'));
+  let videos = [];
+  if (savedVideos && savedVideos.length > 0) {
+    videos = savedVideos;
+  } else if (typeof initialVideos !== 'undefined' && initialVideos.length > 0) {
+    videos = initialVideos;
+  }
+  localStorage.setItem('megagen_videos', JSON.stringify(videos));
+
+  // 3. 상단 뱃지 카운트 갱신
+  const vBadge = document.getElementById('videoCountBadge');
+  const cBadge = document.getElementById('catCountBadge');
+  if (vBadge) vBadge.innerText = videos.length;
+  if (cBadge) cBadge.innerText = categories.length;
 
     // 유튜브 URL 추출 헬퍼
     function getYouTubeInfo(url) {
