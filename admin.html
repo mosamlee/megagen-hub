@@ -142,14 +142,27 @@
 
       <!-- 우측: 등록된 영상 관리 리스트 -->
       <div class="lg:col-span-7 space-y-3">
-        <div class="flex items-center justify-between pb-2">
-          <h3 class="text-sm font-bold text-slate-700">전체 등록 리스트</h3>
-          <span class="text-xs text-slate-400">드래그 대신 상하(▲▼) 버튼으로 순서 조정</span>
+      <div class="flex items-center justify-between pb-2">
+        <h3 class="text-sm font-bold text-slate-700">전체 등록 리스트</h3>
+        <span class="text-xs text-slate-400">드래그 대신 상하(▲▼) 버튼으로 순서 조정</span>
+      </div>
+
+      <!-- 카테고리 필터 버튼 탭 & 카운트 -->
+      <div class="mb-5 flex flex-wrap gap-2 items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex flex-wrap gap-1.5" id="adminCategoryFilters">
+          <!-- JS 함수(renderAdminCategoryFilters)로 버튼들이 자동 생성됩니다 -->
         </div>
-        <div id="adminVideoList" class="space-y-2.5">
-          <!-- 스크립트로 렌더링 -->
+        <div class="text-xs text-slate-400">
+          선택된 영상: <span id="currentFilteredCount" class="font-bold text-sky-600">0</span>개
         </div>
       </div>
+
+      <!-- 영상 리스트 렌더링 컨테이너 (1개만 유지) -->
+      <div id="adminVideoList" class="space-y-2.5">
+        <!-- 스크립트로 렌더링 -->
+      </div>
+    </div>
+
     </section>
 
     <!-- [탭 2] 카테고리 관리 섹션 -->
@@ -271,6 +284,7 @@
         document.getElementById('dashboardContainer').classList.remove('hidden');
         document.getElementById('btnChangePw').classList.remove('hidden');
         renderCategorySelect();
+        renderAdminCategoryFilters();
         renderAdminVideos();
         renderAdminCategories();
       } else {
@@ -323,52 +337,124 @@
     }
 
     // 영상 리스트 렌더링
-    function renderAdminVideos() {
-      const list = document.getElementById('adminVideoList');
-      document.getElementById('videoCountBadge').innerText = videos.length;
-      list.innerHTML = "";
+    // 현재 선택된 관리자 카테고리 필터 상태
+let adminSelectedCategory = "전체";
 
-      videos.forEach((v, idx) => {
-        const isHidden = v.isVisible === false;
-        list.innerHTML += `
-          <div class="p-3.5 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3 shadow-sm ${isHidden ? 'opacity-50 bg-slate-50' : ''}">
-            <div class="flex items-center gap-3 overflow-hidden">
-              <span class="text-slate-400 font-mono font-semibold w-5 text-center text-xs">${idx + 1}</span>
-              <div class="w-14 h-9 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 relative">
-                ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">🔒</div>`}
-              </div>
-              <div class="truncate">
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="text-[10px] font-semibold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded">${v.category}</span>
-                  ${v.isPinned ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">⭐ 고정</span>` : ''}
-                  ${v.isNew ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">⚡ NEW</span>` : ''}
-                  <span class="font-bold text-slate-800 text-xs truncate">${v.title}</span>
-                </div>
-                <span class="text-[11px] text-slate-400 block truncate mt-0.5">${v.desc || '설명 없음'}</span>
-              </div>
-            </div>
+// 1. 카테고리 필터 버튼 탭 생성
+function renderAdminCategoryFilters() {
+  const filterContainer = document.getElementById('adminCategoryFilters');
+  if (!filterContainer) return;
 
-            <!-- 컨트롤 버튼 군 -->
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <button onclick="moveVideo(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
-              <button onclick="moveVideo(${idx}, 1)" ${idx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
-              
-              <!-- 노출 / 숨김 토글 -->
-              <button onclick="toggleVideoVisibility(${idx})" title="영상 노출/숨김 전환" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border transition ${v.isVisible !== false ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100' : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'}">
-                ${v.isVisible !== false ? '👁️ 노출' : '🚫 숨김'}
-              </button>
+  const catList = ["전체", "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"];
+  
+  filterContainer.innerHTML = catList.map(cat => {
+    // 카테고리별 영상 개수 카운트
+    const count = (cat === "전체") 
+      ? videos.length 
+      : (cat === "신제품" 
+          ? videos.filter(v => v.isNew === true).length 
+          : videos.filter(v => v.category === cat).length);
+          
+    const isActive = adminSelectedCategory === cat;
+    
+    return `
+      <button 
+        type="button"
+        onclick="setAdminCategoryFilter('${cat}')" 
+        class="px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+          isActive 
+            ? 'bg-sky-600 text-white shadow-sm' 
+            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+        }">
+        <span>${cat}</span>
+        <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-500'}">${count}</span>
+      </button>
+    `;
+  }).join('');
+}
 
-              <button onclick="editVideo(${idx})" title="수정" class="w-7 h-7 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-xs hover:bg-sky-100">
-                <i class="fa-solid fa-pen"></i>
-              </button>
-              <button onclick="deleteVideo(${idx})" title="삭제" class="w-7 h-7 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>
+// 2. 카테고리 필터 전환 함수
+function setAdminCategoryFilter(categoryName) {
+  adminSelectedCategory = categoryName;
+  renderAdminCategoryFilters();
+  renderAdminVideos();
+}
+
+// 3. 필터링된 영상 관리 리스트 렌더링
+function renderAdminVideos() {
+  const list = document.getElementById('adminVideoList');
+  const countBadge = document.getElementById('videoCountBadge');
+  const filteredCountEl = document.getElementById('currentFilteredCount');
+  
+  if (countBadge) countBadge.innerText = videos.length;
+  if (!list) return;
+
+  // 카테고리 필터 적용
+  let filtered = [];
+  if (adminSelectedCategory === "전체") {
+    filtered = videos;
+  } else if (adminSelectedCategory === "신제품") {
+    filtered = videos.filter(v => v.isNew === true);
+  } else {
+    filtered = videos.filter(v => v.category === adminSelectedCategory);
+  }
+
+  if (filteredCountEl) filteredCountEl.innerText = filtered.length;
+  list.innerHTML = "";
+
+  if (filtered.length === 0) {
+    list.innerHTML = `
+      <div class="py-12 text-center text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
+        해당 카테고리에 등록된 영상이 없습니다.
+      </div>
+    `;
+    return;
+  }
+
+  filtered.forEach((v) => {
+    // 전체 배열 기준의 인덱스를 찾아 순서 이동 및 수정/삭제가 정확히 동작하도록 연동
+    const realIdx = videos.findIndex(item => item.id === v.id);
+    const isHidden = v.isVisible === false;
+
+    list.innerHTML += `
+      <div class="p-3.5 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3 shadow-sm ${isHidden ? 'opacity-50 bg-slate-50' : ''}">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <span class="text-slate-400 font-mono font-semibold w-5 text-center text-xs">${realIdx + 1}</span>
+          <div class="w-14 h-9 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 relative">
+            ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">🔒</div>`}
           </div>
-        `;
-      });
-    }
+          <div class="truncate">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="text-[10px] font-semibold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded">${v.category}</span>
+              ${v.isPinned ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">⭐ 고정</span>` : ''}
+              ${v.isNew ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">⚡ NEW</span>` : ''}
+              <span class="font-bold text-slate-800 text-xs truncate">${v.title}</span>
+            </div>
+            <span class="text-[11px] text-slate-400 block truncate mt-0.5">${v.desc || '설명 없음'}</span>
+          </div>
+        </div>
+
+        <!-- 컨트롤 버튼 군 -->
+        <div class="flex items-center gap-1 flex-shrink-0">
+          <button type="button" onclick="moveVideo(${realIdx}, -1)" ${realIdx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
+          <button type="button" onclick="moveVideo(${realIdx}, 1)" ${realIdx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
+          
+          <!-- 노출 / 숨김 토글 -->
+          <button type="button" onclick="toggleVideoVisibility(${realIdx})" title="영상 노출/숨김 전환" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border transition ${v.isVisible !== false ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100' : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'}">
+            ${v.isVisible !== false ? '👁️ 노출' : '🚫 숨김'}
+          </button>
+
+          <button type="button" onclick="editVideo(${realIdx})" title="수정" class="w-7 h-7 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-xs hover:bg-sky-100">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button type="button" onclick="deleteVideo(${realIdx})" title="삭제" class="w-7 h-7 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      </div>
+    `;
+  });
+}
 
     // 영상 노출/숨김 토글 함수
     function toggleVideoVisibility(idx) {
