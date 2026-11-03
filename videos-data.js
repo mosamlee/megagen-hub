@@ -180,4 +180,83 @@ const initialVideos = [
     downloadUrl: "https://youtu.be/g0rlTtDz14E",
     shareMsg: "원장님, GBR 시 신선한 자가골을 간편하고 안전하게 모아주는 Auto-Max 채취 기구 영상 전달드립니다."
   }
-];
+],
+  
+// ==========================================
+  // [엔도 솔루션 - 치근/근관 보존 & PET]
+  // ==========================================
+  {
+    id: 5001,
+    category: "엔도 솔루션",
+    title: "Root Membrane Kit 3D 매뉴얼 (치근막 보존 테크닉)",
+    desc: "치근막을 보존하여 협측 골 흡수를 예방하고 심미성을 유지하는 루트 멤브레인 3D 가이드",
+    duration: "02:47",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/fZEsMDlOqpg",
+    thumbUrl: "https://img.youtube.com/vi/fZEsMDlOqpg/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/fZEsMDlOqpg",
+    shareMsg: "원장님, 치근막을 보존하여 협측 치조골 흡수를 방지하는 Root Membrane Kit 3D 매뉴얼 영상입니다."
+  },
+  {
+    id: 5002,
+    category: "엔도 솔루션",
+    title: "MegaGen PET Kit - Socket Shield Procedure (소켓 쉴드 술식)",
+    desc: "발치와 내 치근편을 보존하여 치조골과 연조직의 자연스러운 외형을 유지하는 임상 프로토콜",
+    duration: "02:09",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/pcqjLn2CNm8",
+    thumbUrl: "https://img.youtube.com/vi/pcqjLn2CNm8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/pcqjLn2CNm8",
+    shareMsg: "원장님, 전치부 심미성 유지와 연조직 함몰을 방지하는 PET 소켓 쉴드 시술 가이드 영상 공유드립니다."
+  },
+  {
+    id: 5003,
+    category: "엔도 솔루션",
+    title: "MegaGen PET Kit - Root Submergence Technique 1 (치근 침림술 1)",
+    desc: "치근 첨부를 치조골 내에 침림시켜 치조제 보존 및 힐링을 돕는 술식 가이드 1편",
+    duration: "00:36",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/7M_oardihQg",
+    thumbUrl: "https://img.youtube.com/vi/7M_oardihQg/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/7M_oardihQg",
+    shareMsg: "원장님, 치조제 보존을 위한 Root Submergence 테크닉 영상 1편입니다."
+  },
+  {
+    id: 5004,
+    category: "엔도 솔루션",
+    title: "MegaGen PET Kit - Root Submergence Technique 2 (치근 침림술 2)",
+    desc: "치근 침림 후 연조직 치유와 골폭 보존을 극대화하는 임상 술식 가이드 2편",
+    duration: "00:32",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/Yo4gmEovou8",
+    thumbUrl: "https://img.youtube.com/vi/Yo4gmEovou8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/Yo4gmEovou8",
+    shareMsg: "원장님, 치조제 보존을 위한 Root Submergence 테크닉 영상 2편입니다."
+  },
+  {
+    id: 5005,
+    category: "엔도 솔루션",
+    title: "Root Membrane Kit 핵심 특장점 및 임상 효용성 Q&A",
+    desc: "루트 멤브레인 키트의 특수 버 구성과 임상적 장점을 요약한 핵심 Q&A 영상",
+    duration: "00:37",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/2e0K9rLcx_o",
+    thumbUrl: "https://img.youtube.com/vi/2e0K9rLcx_o/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/2e0K9rLcx_o",
+    shareMsg: "원장님, Root Membrane Kit의 핵심 장점을 30초로 정리한 요약 영상 전달드립니다."
+  };
