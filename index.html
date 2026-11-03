@@ -115,17 +115,12 @@
       });
     }
 
-    let savedVideos = JSON.parse(localStorage.getItem('megagen_videos'));
-    let videos = [];
-    if (!savedVideos || savedVideos.length === 0) {
-      videos = rawDefaultVideos;
-    } else {
-      videos = savedVideos.map(v => ({
-        ...v,
-        isNew: v.isNew === true,
-        isVisible: v.isVisible !== false
-      }));
-    }
+    // 외부 videos-data.js 목록이 있으면 브라우저 예전 캐시를 덮어씌워 최신 데이터 강제 동기화
+    let videos = (rawDefaultVideos && rawDefaultVideos.length > 0)
+    ? rawDefaultVideos
+    : (JSON.parse(localStorage.getItem('megagen_videos')) || []);
+
+      localStorage.setItem('megagen_videos', JSON.stringify(videos));
 
     let currentCategory = "전체";
 
