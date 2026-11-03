@@ -13,49 +13,47 @@
     body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
-  <!-- 관리자 상단 바 -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition">
-          <img src="megagen_logo.png" alt="MEGAGEN" class="h-8 w-auto object-contain" onerror="this.onerror=null; this.src='images/megagen_logo.png';">
-          <span class="text-slate-300 font-light text-xl">|</span>
-          <span class="text-lg font-bold text-slate-800 tracking-tight">관리자 센터</span>
-        </a>
+  <!-- 관리자 로그인 섹션 -->
+  <div id="authContainer" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-white rounded-3xl p-8 shadow-2xl border border-slate-100 text-center">
+      <div class="w-14 h-14 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl shadow-sm">
+        <i class="fa-solid fa-lock"></i>
       </div>
-      <div class="flex items-center gap-3">
-        <button onclick="changePassword()" id="btnChangePw" class="hidden px-4 py-2 text-xs font-semibold text-slate-600 hover:text-sky-600 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition">
-          <i class="fa-solid fa-key mr-1"></i> 비밀번호 변경
+      <h2 class="text-xl font-bold text-slate-900 tracking-tight">관리자 인증</h2>
+      <p class="text-xs text-slate-500 mt-1 mb-6">콘텐츠 관리 및 설정을 위해 비밀번호를 입력하세요.</p>
+      
+      <div class="space-y-3">
+        <input type="password" id="adminPasswordInput" onkeypress="if(event.keyCode==13) verifyLogin()" placeholder="비밀번호 입력 (기본: 1234)" 
+          class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-center tracking-widest focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500/20 focus:border-sky-500 transition">
+        <button type="button" onclick="verifyLogin()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-sm transition shadow-sm">
+          인증하고 입장하기
         </button>
-        <a href="index.html" class="px-4 py-2 text-xs font-bold text-sky-600 hover:bg-sky-50 rounded-xl border border-sky-200 transition flex items-center gap-1.5">
-          <i class="fa-solid fa-arrow-left"></i> 라운지로 돌아가기
-        </a>
+        <a href="index.html" class="block text-xs text-slate-400 hover:text-slate-600 pt-2">← 메인 라운지로 돌아가기</a>
       </div>
     </div>
- <!-- 관리자 상단 헤더 (모바일 줄바꿈 및 겹침 방지) -->
+  </div>
+
+  <!-- 관리자 상단 헤더 (모바일 반응형 최적화) -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-      <!-- 로고 및 센터 타이틀 -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2 sm:gap-3">
           <a href="index.html" class="text-xl sm:text-2xl font-black text-sky-600 tracking-tight">MEGAGEN</a>
           <span class="text-slate-200 text-lg sm:text-xl">|</span>
           <span class="text-xs sm:text-base font-bold text-slate-800 whitespace-nowrap">관리자 센터</span>
         </div>
-        <!-- 모바일 전용 빠른 복귀 버튼 -->
         <a href="index.html" class="sm:hidden px-2.5 py-1 text-xs text-sky-600 bg-sky-50 border border-sky-200 rounded-lg font-semibold flex items-center gap-1">
           <i class="fa-solid fa-arrow-left"></i> 라운지
         </a>
       </div>
 
-      <!-- 제어 버튼군 (모바일에서는 가로 나열) -->
       <div class="flex items-center gap-2 self-end sm:self-auto">
-        <button onclick="promptChangePassword()" class="px-3 py-1.5 text-xs text-slate-600 hover:text-sky-600 bg-slate-50 border border-slate-200 rounded-lg flex items-center gap-1.5 transition">
+        <button type="button" onclick="changePassword()" id="btnChangePw" class="px-3 py-1.5 text-xs text-slate-600 hover:text-sky-600 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg flex items-center gap-1.5 transition">
           <i class="fa-solid fa-key"></i> 비밀번호 변경
         </button>
-        <button onclick="handleLogout()" class="px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg flex items-center gap-1.5 transition">
+        <button type="button" onclick="handleLogout()" class="px-3 py-1.5 text-xs text-rose-600 hover:bg-rose-50 border border-rose-200 rounded-lg flex items-center gap-1.5 transition">
           <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
         </button>
         <a href="index.html" class="hidden sm:flex px-3.5 py-1.5 text-xs text-white bg-slate-800 hover:bg-slate-900 rounded-lg items-center gap-1.5 transition">
@@ -66,22 +64,22 @@
 
     <!-- 상단 탭 네비게이션 -->
     <div class="max-w-7xl mx-auto px-4 sm:px-8 flex gap-6 text-sm font-semibold border-t border-slate-100 overflow-x-auto scrollbar-none">
-      <button onclick="switchTab('videos')" id="tabVideosBtn" class="text-sky-600 border-b-2 border-sky-600 py-3 whitespace-nowrap transition">
+      <button type="button" onclick="switchTab('videos')" id="tabVideosBtn" class="text-sky-600 border-b-2 border-sky-600 py-3 whitespace-nowrap transition font-bold">
         🎬 영상 콘텐츠 관리 (<span id="videoCountBadge">0</span>)
       </button>
-      <button onclick="switchTab('categories')" id="tabCategoriesBtn" class="text-slate-400 hover:text-slate-700 py-3 whitespace-nowrap transition">
+      <button type="button" onclick="switchTab('categories')" id="tabCategoriesBtn" class="text-slate-400 hover:text-slate-700 py-3 whitespace-nowrap transition font-semibold">
         📁 카테고리 관리 (<span id="catCountBadge">0</span>)
       </button>
     </div>
   </header>
 
-  <!-- 관리자 메인 대시보드 (반응형 2단 그리드) -->
-  <main id="dashboardContainer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+  <!-- 관리자 메인 대시보드 -->
+  <main id="dashboardContainer" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 flex-1 w-full">
     
     <!-- [탭 1] 영상 콘텐츠 관리 섹션 -->
     <section id="videosTabSection" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       
-      <!-- 좌측: 영상 신규 등록 / 수정 폼 (모바일에서는 sticky 해제하여 겹침 방지) -->
+      <!-- 좌측: 영상 신규 등록 / 수정 폼 -->
       <div class="lg:col-span-5 bg-white p-5 sm:p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 h-fit static lg:sticky lg:top-28">
         <div class="flex items-center justify-between pb-3 border-b border-slate-100">
           <h3 id="formTitle" class="text-base font-bold text-slate-900 tracking-tight">새 영상 등록</h3>
@@ -109,7 +107,7 @@
             <label class="block text-xs font-semibold text-slate-700 mb-1">상태</label>
             <select id="videoStatusSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
               <option value="active">즉시 공개</option>
-              <option value="locked">오픈 예정</option>
+              <option value="locked">오픈 예정 (잠금)</option>
             </select>
           </div>
           <div>
@@ -123,11 +121,11 @@
 
         <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
           <label class="flex items-center gap-1.5 cursor-pointer font-semibold text-amber-600">
-            <input type="checkbox" id="videoNewCheck" class="rounded text-amber-500 focus:ring-0">
+            <input type="checkbox" id="videoIsNewCheckbox" class="rounded text-amber-500 focus:ring-0">
             ⚡ 신제품 탭 동시 노출
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer font-semibold text-sky-700">
-            <input type="checkbox" id="videoVisibleCheck" checked class="rounded text-sky-600 focus:ring-0">
+            <input type="checkbox" id="videoIsVisibleCheckbox" checked class="rounded text-sky-600 focus:ring-0">
             👁️ 사이트 노출
           </label>
         </div>
@@ -147,6 +145,7 @@
           <input type="text" id="videoShareMsgInput" placeholder="원장님, 문의주신 솔루션 영상 공유드립니다." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
         </div>
 
+        <input type="hidden" id="editingVideoId" value="">
         <button type="button" onclick="saveVideo()" id="btnSaveVideo" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-sm transition shadow-sm mt-2">
           영상 등록 완료
         </button>
@@ -178,48 +177,71 @@
 
     <!-- [탭 2] 카테고리 관리 섹션 -->
     <section id="categoriesTabSection" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <!-- 기존 카테고리 관리 코드 유지 -->
+      <!-- 좌측: 카테고리 추가 -->
+      <div class="lg:col-span-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4 h-fit">
+        <h3 class="text-base font-bold text-slate-900 tracking-tight pb-3 border-b border-slate-100">새 카테고리 생성</h3>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">카테고리명</label>
+          <input type="text" id="newCategoryInput" placeholder="예: 핸드피스 & 소형장비" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-sky-500">
+        </div>
+        <button type="button" onclick="addCategory()" class="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs transition shadow-sm">
+          카테고리 추가
+        </button>
+      </div>
+
+      <!-- 우측: 카테고리 리스트 & 순서 이동/숨김/삭제 -->
+      <div class="lg:col-span-8 space-y-3">
+        <div class="flex items-center justify-between pb-2">
+          <h3 class="text-sm font-bold text-slate-700">카테고리 노출 및 순서 관리</h3>
+          <span class="text-xs text-slate-400">숨김 처리 시 메인 네비게이션 탭에서만 감춰집니다.</span>
+        </div>
+        <div id="adminCategoryList" class="space-y-2">
+          <!-- 스크립트로 렌더링 -->
+        </div>
+      </div>
     </section>
 
   </main>
 
   <script>
-// 기본 카테고리 정의
-  const defaultRawCategories = [
-    { name: "신제품", isVisible: true },
-    { name: "임플란트 솔루션", isVisible: true },
-    { name: "디지털 솔루션", isVisible: true },
-    { name: "바이오레이즈 솔루션", isVisible: true },
-    { name: "엔도 솔루션", isVisible: true },
-    { name: "장비 및 재료·재생", isVisible: true }
-  ];
+    // 기본 카테고리 정의
+    const defaultRawCategories = [
+      { name: "신제품", isVisible: true },
+      { name: "임플란트 솔루션", isVisible: true },
+      { name: "디지털 솔루션", isVisible: true },
+      { name: "바이오레이즈 솔루션", isVisible: true },
+      { name: "엔도 솔루션", isVisible: true },
+      { name: "장비 및 재료·재생", isVisible: true }
+    ];
 
-  // 1. 카테고리 복구 및 동기화 (0개면 무조건 기본 카테고리 로드)
-  let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
-  let categories = (savedCats && savedCats.length > 0)
-    ? savedCats.map(c => typeof c === 'string' ? { name: c, isVisible: true } : { name: c.name, isVisible: c.isVisible !== false })
-    : defaultRawCategories;
-  localStorage.setItem('megagen_categories', JSON.stringify(categories));
+    // 1. 카테고리 데이터 동기화
+    let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
+    let categories = (savedCats && savedCats.length > 0)
+      ? savedCats.map(c => typeof c === 'string' ? { name: c, isVisible: true } : { name: c.name, isVisible: c.isVisible !== false })
+      : defaultRawCategories;
+    localStorage.setItem('megagen_categories', JSON.stringify(categories));
 
-  // 2. 영상 데이터 복구 및 동기화 (0개면 videos-data.js의 initialVideos로 자동 로드)
-  let savedVideos = JSON.parse(localStorage.getItem('megagen_videos'));
-  let videos = [];
-  if (savedVideos && savedVideos.length > 0) {
-    videos = savedVideos;
-  } else if (typeof initialVideos !== 'undefined' && initialVideos.length > 0) {
-    videos = initialVideos;
-  }
-  localStorage.setItem('megagen_videos', JSON.stringify(videos));
+    // 2. 영상 데이터 동기화 (0개면 videos-data.js의 initialVideos로 자동 로드)
+    let savedVideos = JSON.parse(localStorage.getItem('megagen_videos'));
+    let videos = [];
+    if (savedVideos && savedVideos.length > 0) {
+      videos = savedVideos;
+    } else if (typeof initialVideos !== 'undefined' && initialVideos.length > 0) {
+      videos = initialVideos;
+    }
+    localStorage.setItem('megagen_videos', JSON.stringify(videos));
 
-  // 3. 상단 뱃지 카운트 갱신
-  const vBadge = document.getElementById('videoCountBadge');
-  const cBadge = document.getElementById('catCountBadge');
-  if (vBadge) vBadge.innerText = videos.length;
-  if (cBadge) cBadge.innerText = categories.length;
+    // 3. 상단 뱃지 카운트 갱신
+    function updateHeaderBadges() {
+      const vBadge = document.getElementById('videoCountBadge');
+      const cBadge = document.getElementById('catCountBadge');
+      if (vBadge) vBadge.innerText = videos.length;
+      if (cBadge) cBadge.innerText = categories.length;
+    }
 
     // 유튜브 URL 추출 헬퍼
     function getYouTubeInfo(url) {
-      if(!url) return { embedUrl: "", thumbUrl: "" };
+      if (!url) return { embedUrl: "", thumbUrl: "" };
       let videoId = "";
       const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
       const match = url.match(regExp);
@@ -242,21 +264,21 @@
       if (entered === storedPw) {
         document.getElementById('authContainer').classList.add('hidden');
         document.getElementById('dashboardContainer').classList.remove('hidden');
-        document.getElementById('btnChangePw').classList.remove('hidden');
-        renderCategorySelect();
-        renderAdminCategoryFilters();
-        renderAdminVideos();
-        renderAdminCategories();
+        switchTab('videos');
       } else {
         alert("비밀번호가 올바르지 않습니다. (기본 비밀번호: 1234)");
       }
+    }
+
+    function handleLogout() {
+      location.reload();
     }
 
     function changePassword() {
       const currentPw = localStorage.getItem('megagen_admin_pw') || "1234";
       const checkPw = prompt("현재 비밀번호를 입력하세요:");
       if (checkPw !== currentPw) {
-        if(checkPw !== null) alert("현재 비밀번호가 일치하지 않습니다.");
+        if (checkPw !== null) alert("현재 비밀번호가 일치하지 않습니다.");
         return;
       }
 
@@ -267,7 +289,7 @@
       }
     }
 
-    // 탭 전환
+    // 탭 전환 함수
     function switchTab(tab) {
       const vSection = document.getElementById('videosTabSection');
       const cSection = document.getElementById('categoriesTabSection');
@@ -275,150 +297,151 @@
       const cBtn = document.getElementById('tabCategoriesBtn');
 
       if (tab === 'videos') {
-        vSection.classList.remove('hidden');
-        cSection.classList.add('hidden');
-        vBtn.className = "text-base font-bold text-sky-600 border-b-2 border-sky-600 pb-2";
-        cBtn.className = "text-base font-medium text-slate-400 hover:text-slate-700 pb-2";
+        if (vSection) vSection.classList.remove('hidden');
+        if (cSection) cSection.classList.add('hidden');
+        if (vBtn) vBtn.className = "text-sky-600 border-b-2 border-sky-600 py-3 whitespace-nowrap transition font-bold";
+        if (cBtn) cBtn.className = "text-slate-400 hover:text-slate-700 py-3 whitespace-nowrap transition font-semibold";
+        
+        renderCategorySelect();
+        renderAdminCategoryFilters();
+        renderAdminVideos();
       } else {
-        vSection.classList.add('hidden');
-        cSection.classList.remove('hidden');
-        cBtn.className = "text-base font-bold text-sky-600 border-b-2 border-sky-600 pb-2";
-        vBtn.className = "text-base font-medium text-slate-400 hover:text-slate-700 pb-2";
+        if (vSection) vSection.classList.add('hidden');
+        if (cSection) cSection.classList.remove('hidden');
+        if (vBtn) vBtn.className = "text-slate-400 hover:text-slate-700 py-3 whitespace-nowrap transition font-semibold";
+        if (cBtn) cBtn.className = "text-sky-600 border-b-2 border-sky-600 py-3 whitespace-nowrap transition font-bold";
+        
+        renderAdminCategories();
       }
+      updateHeaderBadges();
     }
 
     // 카테고리 셀렉트 렌더링
     function renderCategorySelect() {
       const select = document.getElementById('videoCategorySelect');
+      if (!select) return;
       select.innerHTML = "";
       categories.forEach(cat => {
         select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
       });
     }
 
-    // 영상 리스트 렌더링
     // 현재 선택된 관리자 카테고리 필터 상태
-let adminSelectedCategory = "전체";
+    let adminSelectedCategory = "전체";
 
-// 1. 카테고리 필터 버튼 탭 생성
-function renderAdminCategoryFilters() {
-  const filterContainer = document.getElementById('adminCategoryFilters');
-  if (!filterContainer) return;
+    // 1. 카테고리 필터 버튼 탭 생성
+    function renderAdminCategoryFilters() {
+      const filterContainer = document.getElementById('adminCategoryFilters');
+      if (!filterContainer) return;
 
-  const catList = ["전체", "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"];
-  
-  filterContainer.innerHTML = catList.map(cat => {
-    // 카테고리별 영상 개수 카운트
-    const count = (cat === "전체") 
-      ? videos.length 
-      : (cat === "신제품" 
-          ? videos.filter(v => v.isNew === true).length 
-          : videos.filter(v => v.category === cat).length);
-          
-    const isActive = adminSelectedCategory === cat;
-    
-    return `
-      <button 
-        type="button"
-        onclick="setAdminCategoryFilter('${cat}')" 
-        class="px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
-          isActive 
-            ? 'bg-sky-600 text-white shadow-sm' 
-            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-        }">
-        <span>${cat}</span>
-        <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-500'}">${count}</span>
-      </button>
-    `;
-  }).join('');
-}
+      const catList = ["전체", "신제품", "임플란트 솔루션", "디지털 솔루션", "바이오레이즈 솔루션", "엔도 솔루션", "장비 및 재료·재생"];
+      
+      filterContainer.innerHTML = catList.map(cat => {
+        const count = (cat === "전체") 
+          ? videos.length 
+          : (cat === "신제품" 
+              ? videos.filter(v => v.isNew === true).length 
+              : videos.filter(v => v.category === cat).length);
+              
+        const isActive = adminSelectedCategory === cat;
+        
+        return `
+          <button 
+            type="button"
+            onclick="setAdminCategoryFilter('${cat}')" 
+            class="px-2.5 py-1 rounded-lg text-xs font-semibold transition flex items-center gap-1.5 ${
+              isActive 
+                ? 'bg-sky-600 text-white shadow-sm' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }">
+            <span>${cat}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-sky-700 text-white' : 'bg-slate-200 text-slate-500'}">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
 
-// 2. 카테고리 필터 전환 함수
-function setAdminCategoryFilter(categoryName) {
-  adminSelectedCategory = categoryName;
-  renderAdminCategoryFilters();
-  renderAdminVideos();
-}
+    // 2. 카테고리 필터 전환 함수
+    function setAdminCategoryFilter(categoryName) {
+      adminSelectedCategory = categoryName;
+      renderAdminCategoryFilters();
+      renderAdminVideos();
+    }
 
-// 3. 필터링된 영상 관리 리스트 렌더링
-function renderAdminVideos() {
-  const list = document.getElementById('adminVideoList');
-  const countBadge = document.getElementById('videoCountBadge');
-  const filteredCountEl = document.getElementById('currentFilteredCount');
-  
-  if (countBadge) countBadge.innerText = videos.length;
-  if (!list) return;
+    // 3. 필터링된 영상 관리 리스트 렌더링
+    function renderAdminVideos() {
+      const list = document.getElementById('adminVideoList');
+      const filteredCountEl = document.getElementById('currentFilteredCount');
+      if (!list) return;
 
-  // 카테고리 필터 적용
-  let filtered = [];
-  if (adminSelectedCategory === "전체") {
-    filtered = videos;
-  } else if (adminSelectedCategory === "신제품") {
-    filtered = videos.filter(v => v.isNew === true);
-  } else {
-    filtered = videos.filter(v => v.category === adminSelectedCategory);
-  }
+      let filtered = [];
+      if (adminSelectedCategory === "전체") {
+        filtered = videos;
+      } else if (adminSelectedCategory === "신제품") {
+        filtered = videos.filter(v => v.isNew === true);
+      } else {
+        filtered = videos.filter(v => v.category === adminSelectedCategory);
+      }
 
-  if (filteredCountEl) filteredCountEl.innerText = filtered.length;
-  list.innerHTML = "";
+      if (filteredCountEl) filteredCountEl.innerText = filtered.length;
+      list.innerHTML = "";
 
-  if (filtered.length === 0) {
-    list.innerHTML = `
-      <div class="py-12 text-center text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
-        해당 카테고리에 등록된 영상이 없습니다.
-      </div>
-    `;
-    return;
-  }
-
-  filtered.forEach((v) => {
-    // 전체 배열 기준의 인덱스를 찾아 순서 이동 및 수정/삭제가 정확히 동작하도록 연동
-    const realIdx = videos.findIndex(item => item.id === v.id);
-    const isHidden = v.isVisible === false;
-
-    list.innerHTML += `
-      <div class="p-3.5 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3 shadow-sm ${isHidden ? 'opacity-50 bg-slate-50' : ''}">
-        <div class="flex items-center gap-3 overflow-hidden">
-          <span class="text-slate-400 font-mono font-semibold w-5 text-center text-xs">${realIdx + 1}</span>
-          <div class="w-14 h-9 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 relative">
-            ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">🔒</div>`}
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="py-12 text-center text-slate-400 text-xs bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            해당 카테고리에 등록된 영상이 없습니다.
           </div>
-          <div class="truncate">
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="text-[10px] font-semibold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded">${v.category}</span>
-              ${v.isPinned ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">⭐ 고정</span>` : ''}
-              ${v.isNew ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">⚡ NEW</span>` : ''}
-              <span class="font-bold text-slate-800 text-xs truncate">${v.title}</span>
+        `;
+        return;
+      }
+
+      filtered.forEach((v) => {
+        const realIdx = videos.findIndex(item => item.id === v.id);
+        const isHidden = v.isVisible === false;
+
+        list.innerHTML += `
+          <div class="p-3.5 bg-white border border-slate-200 rounded-2xl flex items-center justify-between gap-3 shadow-sm ${isHidden ? 'opacity-50 bg-slate-50' : ''}">
+            <div class="flex items-center gap-3 overflow-hidden">
+              <span class="text-slate-400 font-mono font-semibold w-5 text-center text-xs">${realIdx + 1}</span>
+              <div class="w-14 h-9 rounded-lg bg-slate-100 overflow-hidden flex-shrink-0 relative">
+                ${v.thumbUrl ? `<img src="${v.thumbUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-400 text-[10px]">🔒</div>`}
+              </div>
+              <div class="truncate">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <span class="text-[10px] font-semibold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded">${v.category}</span>
+                  ${v.isPinned ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">⭐ 고정</span>` : ''}
+                  ${v.isNew ? `<span class="text-[10px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded">⚡ NEW</span>` : ''}
+                  <span class="font-bold text-slate-800 text-xs truncate">${v.title}</span>
+                </div>
+                <span class="text-[11px] text-slate-400 block truncate mt-0.5">${v.desc || '설명 없음'}</span>
+              </div>
             </div>
-            <span class="text-[11px] text-slate-400 block truncate mt-0.5">${v.desc || '설명 없음'}</span>
+
+            <!-- 컨트롤 버튼 군 -->
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <button type="button" onclick="moveVideo(${realIdx}, -1)" ${realIdx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
+              <button type="button" onclick="moveVideo(${realIdx}, 1)" ${realIdx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
+              
+              <!-- 노출 / 숨김 토글 -->
+              <button type="button" onclick="toggleVideoVisibility(${realIdx})" title="영상 노출/숨김 전환" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border transition ${v.isVisible !== false ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100' : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'}">
+                ${v.isVisible !== false ? '👁️ 노출' : '🚫 숨김'}
+              </button>
+
+              <button type="button" onclick="editVideo(${realIdx})" title="수정" class="w-7 h-7 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-xs hover:bg-sky-100">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+              <button type="button" onclick="deleteVideo(${realIdx})" title="삭제" class="w-7 h-7 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
           </div>
-        </div>
-
-        <!-- 컨트롤 버튼 군 -->
-        <div class="flex items-center gap-1 flex-shrink-0">
-          <button type="button" onclick="moveVideo(${realIdx}, -1)" ${realIdx === 0 ? 'disabled class="opacity-20"' : ''} title="위로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
-          <button type="button" onclick="moveVideo(${realIdx}, 1)" ${realIdx === videos.length - 1 ? 'disabled class="opacity-20"' : ''} title="아래로 이동" class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
-          
-          <!-- 노출 / 숨김 토글 -->
-          <button type="button" onclick="toggleVideoVisibility(${realIdx})" title="영상 노출/숨김 전환" class="px-2.5 py-1 text-[11px] font-bold rounded-lg border transition ${v.isVisible !== false ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100' : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-slate-200'}">
-            ${v.isVisible !== false ? '👁️ 노출' : '🚫 숨김'}
-          </button>
-
-          <button type="button" onclick="editVideo(${realIdx})" title="수정" class="w-7 h-7 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-xs hover:bg-sky-100">
-            <i class="fa-solid fa-pen"></i>
-          </button>
-          <button type="button" onclick="deleteVideo(${realIdx})" title="삭제" class="w-7 h-7 bg-rose-50 text-rose-500 rounded-lg flex items-center justify-center text-xs hover:bg-rose-100">
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-        </div>
-      </div>
-    `;
-  });
-}
+        `;
+      });
+    }
 
     // 영상 노출/숨김 토글 함수
     function toggleVideoVisibility(idx) {
-      videos[idx].isVisible = videos[idx].isVisible === false ? true : false;
+      videos[idx].isVisible = videos[idx].isVisible === false;
       saveVideosSync();
     }
 
@@ -478,6 +501,7 @@ function renderAdminVideos() {
       document.getElementById('videoUrlInput').value = v.videoUrl || "";
       document.getElementById('videoDownloadInput').value = v.downloadUrl || "";
       document.getElementById('videoShareMsgInput').value = v.shareMsg || "";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function resetVideoForm() {
@@ -513,7 +537,9 @@ function renderAdminVideos() {
 
     function saveVideosSync() {
       localStorage.setItem('megagen_videos', JSON.stringify(videos));
+      renderAdminCategoryFilters();
       renderAdminVideos();
+      updateHeaderBadges();
     }
 
     // ==========================================
@@ -521,7 +547,7 @@ function renderAdminVideos() {
     // ==========================================
     function renderAdminCategories() {
       const list = document.getElementById('adminCategoryList');
-      document.getElementById('catCountBadge').innerText = categories.length;
+      if (!list) return;
       list.innerHTML = "";
 
       categories.forEach((cat, idx) => {
@@ -533,19 +559,20 @@ function renderAdminVideos() {
               <span class="font-bold text-sm ${isHidden ? 'text-slate-400 line-through' : 'text-slate-800'}">${cat.name}</span>
             </div>
             <div class="flex items-center gap-1.5">
-              <button onclick="moveCategory(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
-              <button onclick="moveCategory(${idx}, 1)" ${idx === categories.length - 1 ? 'disabled class="opacity-20"' : ''} class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
-              <button onclick="toggleCategoryVisibility(${idx})" class="px-2.5 py-1 text-xs font-semibold rounded-lg border transition ${cat.isVisible !== false ? 'bg-sky-50 text-sky-600 border-sky-200' : 'bg-slate-100 text-slate-400 border-slate-200'}">
+              <button type="button" onclick="moveCategory(${idx}, -1)" ${idx === 0 ? 'disabled class="opacity-20"' : ''} class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▲</button>
+              <button type="button" onclick="moveCategory(${idx}, 1)" ${idx === categories.length - 1 ? 'disabled class="opacity-20"' : ''} class="w-7 h-7 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-center text-slate-600 text-xs">▼</button>
+              <button type="button" onclick="toggleCategoryVisibility(${idx})" class="px-2.5 py-1 text-xs font-semibold rounded-lg border transition ${cat.isVisible !== false ? 'bg-sky-50 text-sky-600 border-sky-200' : 'bg-slate-100 text-slate-400 border-slate-200'}">
                 ${cat.isVisible !== false ? '👁️ 노출' : '🚫 숨김'}
               </button>
-              <button onclick="renameCategory(${idx})" class="px-2.5 py-1 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600">수정</button>
-              <button onclick="deleteCategory(${idx})" class="w-7 h-7 bg-rose-50 hover:bg-rose-100 text-rose-500 rounded-lg flex items-center justify-center text-xs">
+              <button type="button" onclick="renameCategory(${idx})" class="px-2.5 py-1 text-xs font-semibold bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600">수정</button>
+              <button type="button" onclick="deleteCategory(${idx})" class="w-7 h-7 bg-rose-50 hover:bg-rose-100 text-rose-500 rounded-lg flex items-center justify-center text-xs">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
             </div>
           </div>
         `;
       });
+      updateHeaderBadges();
     }
 
     function addCategory() {
@@ -562,7 +589,7 @@ function renderAdminVideos() {
     }
 
     function toggleCategoryVisibility(idx) {
-      categories[idx].isVisible = categories[idx].isVisible === false ? true : false;
+      categories[idx].isVisible = categories[idx].isVisible === false;
       saveCategoriesSync();
     }
 
@@ -599,7 +626,11 @@ function renderAdminVideos() {
       localStorage.setItem('megagen_categories', JSON.stringify(categories));
       renderCategorySelect();
       renderAdminCategories();
+      updateHeaderBadges();
     }
+
+    // 초기 상태 반영
+    updateHeaderBadges();
   </script>
 </body>
 </html>
