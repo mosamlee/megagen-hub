@@ -1,168 +1,168 @@
 /**
- * MEGAGEN 국내영업 비디오 허브 - 4개 채널 통합 영상 DB (videos-data.js)
+ * MEGAGEN 국내영업 비디오 허브 - 장비 및 재료·재생 데이터 (videos-data.js)
+ * 검증 채널: 메가젠 공식(MegaGen Implant), 메가젠 일타강사, MegaGenTV
  */
-const initialVideos = [
-  // ==========================================
-  // 1. 신제품
-  // ==========================================
-  {
-    id: 1001,
-    category: "신제품",
-    title: "ARi(AnyRidge immExtreme) 전치부 솔루션 공식 런칭",
-    desc: "치조골 흡수가 극심한 전치부 극복을 위한 치조골 보존 및 무삭제 즉시 식립",
-    status: "active",
-    isPinned: true,
-    isNew: true,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/n6owmNvdPZ0",
-    thumbUrl: "https://img.youtube.com/vi/n6owmNvdPZ0/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/n6owmNvdPZ0",
-    shareMsg: "원장님, 전치부 박혈·흡수 케이스 극복을 위해 개발된 ARi 공식 영상 공유드립니다."
-  },
-  {
-    id: 1002,
-    category: "신제품",
-    title: "메가젠 일타강사│BLUEDIAMOND - New DUO Surgical Kit 핸즈온",
-    desc: "X-FIT 결합 구조와 고강도 순수 티타늄 합금으로 파절을 방지한 프리미엄 수술 키트",
-    status: "active",
-    isPinned: false,
-    isNew: true,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/LY44u-UZlhM",
-    thumbUrl: "https://img.youtube.com/vi/LY44u-UZlhM/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/LY44u-UZlhM",
-    shareMsg: "원장님, 장기적 파절 문제를 해결한 BLUEDIAMOND 수술 키트 핸즈온 영상입니다."
-  },
 
+const equipmentMaterialsVideos = [
   // ==========================================
-  // 2. 임플란트 솔루션
-  // ==========================================
-  {
-    id: 2001,
-    category: "임플란트 솔루션",
-    title: "박광범의 임플란트 수술방│골질 불량 부위 KnifeThread 식립 라이브",
-    desc: "KnifeThread 고유의 응력 분산과 불량 골질에서의 초기 고정력 극대화 서저리",
-    status: "active",
-    isPinned: true,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/X75hKBrm5tQ",
-    thumbUrl: "https://img.youtube.com/vi/X75hKBrm5tQ/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/X75hKBrm5tQ",
-    shareMsg: "원장님, 박광범 원장의 골질 불량 부위 KnifeThread 식립 라이브 서저리 영상입니다."
-  },
-  {
-    id: 2002,
-    category: "임플란트 솔루션",
-    title: "AnyRidge KnifeThread 생체역학적 원리와 임상 안정성",
-    desc: "골질 불량 부위에서도 치밀골 손상 없이 강력한 초기 고정력을 얻는 식립 프로토콜",
-    status: "active",
-    isPinned: false,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/kJQP7kiw5Fk",
-    thumbUrl: "https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/kJQP7kiw5Fk",
-    shareMsg: "원장님, 불량 골질 케이스에서 발군의 고정력을 보여주는 AnyRidge 임상 영상입니다."
-  },
-
-  // ==========================================
-  // 3. 디지털 솔루션
-  // ==========================================
-  {
-    id: 3001,
-    category: "디지털 솔루션",
-    title: "R2GATE 서지컬 가이드 시스템 풀 워크플로우",
-    desc: "CBCT 데이터와 구강 스캔 정합부터 모의 시술 및 3D 서지컬 템플릿 제작까지",
-    status: "active",
-    isPinned: true,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/9bZkp7q19f0",
-    thumbUrl: "https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/9bZkp7q19f0",
-    shareMsg: "원장님, 오차 없는 정밀 식립을 지원하는 R2GATE 디지털 가이드 가이드 영상입니다."
-  },
-  {
-    id: 3002,
-    category: "디지털 솔루션",
-    title: "R2 Studio Q 가상 환자 안면 스캔 연동 시연",
-    desc: "환자의 얼굴 윤곽과 3D 치아 배열을 실시간 매칭하는 체어사이드 솔루션",
-    status: "active",
-    isPinned: false,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/3JZ_D3ELwOQ",
-    thumbUrl: "https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/3JZ_D3ELwOQ",
-    shareMsg: "원장님, 페이스스캔을 통한 직관적인 보철 상담 솔루션 R2 Studio Q 영상입니다."
-  },
-
-  // ==========================================
-  // 4. 바이오레이즈 솔루션
-  // ==========================================
-  {
-    id: 4001,
-    category: "바이오레이즈 솔루션",
-    title: "Waterlase iPlus 최소침습 치주 및 임플란트 주위염 치료",
-    desc: "물방울 레이저를 활용해 조직 손상 없이 바이오필름을 제거하는 체어사이드 가이드",
-    status: "active",
-    isPinned: true,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso",
-    thumbUrl: "https://img.youtube.com/vi/L_LUpnjgPso/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/L_LUpnjgPso",
-    shareMsg: "원장님, 임플란트 주위염 및 최소침습 연조직 치료에 특화된 Waterlase 영상입니다."
-  },
-
-  // ==========================================
-  // 5. 엔도 솔루션
-  // ==========================================
-  {
-    id: 5001,
-    category: "엔도 솔루션",
-    title: "만곡 근관 치료를 위한 Ni-Ti 파일 시스템 성형 가이드",
-    desc: "근관 원형 형태를 보존하며 파절 저항성을 대폭 높인 체계적인 근관 성형 테크닉",
-    status: "active",
-    isPinned: false,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/1laZgGZ0lKU",
-    thumbUrl: "https://img.youtube.com/vi/1laZgGZ0lKU/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/1laZgGZ0lKU",
-    shareMsg: "원장님, 만곡 근관에서도 파절 우려 없이 안전하게 성형하는 엔도 파일 가이드입니다."
-  },
-  {
-    id: 5002,
-    category: "엔도 솔루션",
-    title: "무선 엔도 모터 및 근관장 측정기 세팅 매뉴얼",
-    desc: "체어사이드 동선을 최소화하고 세밀한 토크 제어로 근관 성형을 돕는 조작법",
-    status: "active",
-    isPinned: false,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/5-9qZgL7q1U",
-    thumbUrl: "https://img.youtube.com/vi/5-9qZgL7q1U/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/5-9qZgL7q1U",
-    shareMsg: "원장님, 체어타임을 단축시켜 주는 일체형 엔도 모터 원포인트 조작 가이드입니다."
-  },
-
-  // ==========================================
-  // 6. 장비 및 재료·재생
+  // [체어 & 클리닉 장비]
   // ==========================================
   {
     id: 6001,
     category: "장비 및 재료·재생",
-    title: "아르테오(Arteo) 유니트 체어 3면 배수 & 감염 관리",
-    desc: "역류 방지 3면 배수 구조와 진료 피로도를 낮추는 인체공학적 설계",
+    title: "MegaGen N2 Chair | The First Class 유니트 체어",
+    desc: "인체공학적 포지셔닝과 감염 제어 설계를 갖춘 메가젠 프리미엄 N2 유니트 체어",
+    duration: "01:54",
     status: "active",
     isPinned: true,
     isNew: false,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/JGwWNGJdvx8",
-    thumbUrl: "https://img.youtube.com/vi/JGwWNGJdvx8/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/JGwWNGJdvx8",
-    shareMsg: "원장님, 감염 관리와 진료실 위생에 최적화된 아르테오 체어 영상 전달드립니다."
+    videoUrl: "https://www.youtube.com/embed/4Jm0vyfg72M",
+    thumbUrl: "https://img.youtube.com/vi/4Jm0vyfg72M/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/4Jm0vyfg72M",
+    shareMsg: "원장님, 인체공학적 설계와 진료 편의성을 극대화한 메가젠 프리미엄 N2 체어 영상 공유드립니다."
+  },
+  {
+    id: 6002,
+    category: "장비 및 재료·재생",
+    title: "N2 Unit Chair 실사용 인터뷰 (순천스마트치과 김대순 원장)",
+    desc: "실제 임상 현장에서 체감하는 N2 유니트 체어의 조작 편의성과 체어타임 단축 효과",
+    duration: "04:58",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/0YMybmbHBSU",
+    thumbUrl: "https://img.youtube.com/vi/0YMybmbHBSU/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/0YMybmbHBSU",
+    shareMsg: "원장님, N2 유니트 체어를 직접 도입해 사용 중이신 김대순 원장님의 생생한 실사용 인터뷰입니다."
+  },
+  {
+    id: 6003,
+    category: "장비 및 재료·재생",
+    title: "메가젠 일타강사│치과밸류 필수템, 플라즈마X 모션 (Plasma X Motion)",
+    desc: "진공 플라즈마 표면 처리로 픽스처뿐 아니라 어버트먼트와 크라운 접착 강도를 2배 높이는 원포인트 가이드",
+    duration: "04:31",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/r8KhaeyNyh8",
+    thumbUrl: "https://img.youtube.com/vi/r8KhaeyNyh8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/r8KhaeyNyh8",
+    shareMsg: "원장님, 픽스처와 보철물 표면을 동시 활성화하여 접착 강도를 2배 끌어올리는 플라즈마X 모션 영상입니다."
+  },
+  {
+    id: 6004,
+    category: "장비 및 재료·재생",
+    title: "MEG-TORQ 무선 전동 토크렌치 조작 및 세팅 매뉴얼",
+    desc: "정밀한 토크 제어로 보철 스크루 파절을 방지하고 안전한 조임을 지원하는 무선 토크렌치",
+    duration: "03:48",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/0y7bmTKNTlE",
+    thumbUrl: "https://img.youtube.com/vi/0y7bmTKNTlE/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/0y7bmTKNTlE",
+    shareMsg: "원장님, 체어사이드에서 정밀하고 안전하게 토크를 제어할 수 있는 MEG-TORQ 전동 렌치 매뉴얼입니다."
+  },
+
+  // ==========================================
+  // [수술 및 응급 키트]
+  // ==========================================
+  {
+    id: 6005,
+    category: "장비 및 재료·재생",
+    title: "MegGyver Kit (맥가이버 키트) 응급 케이스 해결 풀 매뉴얼",
+    desc: "파절된 스크루, 어버트먼트, 픽스처까지 체어타임 지연 없이 원스톱으로 제거하는 3단계 솔루션",
+    duration: "05:15",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/b1Ks_e5594o",
+    thumbUrl: "https://img.youtube.com/vi/b1Ks_e5594o/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/b1Ks_e5594o",
+    shareMsg: "원장님, 진료실 응급 상황(스크루/어버트먼트 파절)을 3분 안에 해결하는 맥가이버 키트 사용법입니다."
+  },
+  {
+    id: 6006,
+    category: "장비 및 재료·재생",
+    title: "메가젠 일타강사│BLUEDIAMOND M1.6 스크루 파절 응급 처치 (MegGyver Kit)",
+    desc: "픽스처 내부에 부러진 M1.6 스크루를 리버스 드릴과 탭 드라이버로 손상 없이 추출하는 테크닉",
+    duration: "04:01",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/ww9rSksBflc",
+    thumbUrl: "https://img.youtube.com/vi/ww9rSksBflc/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/ww9rSksBflc",
+    shareMsg: "원장님, 블루다이아몬드 나사 파절 시 맥가이버 키트로 신속하게 잔류물을 제거하는 핸즈온 영상입니다."
+  },
+  {
+    id: 6007,
+    category: "장비 및 재료·재생",
+    title: "메가젠 일타강사│[MICA, MILA Kit] 상악동 거상술 핸즈온 및 사용 가이드",
+    desc: "치조정(Crestal)과 측벽(Lateral) 상악동 거상술을 점막 손상 없이 안전하게 시행하는 서지컬 키트 프로토콜",
+    duration: "11:48",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/H__lK-RuvvM",
+    thumbUrl: "https://img.youtube.com/vi/H__lK-RuvvM/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/H__lK-RuvvM",
+    shareMsg: "원장님, 상악동 점막 천공 리스크 없이 안전하고 빠른 거상을 지원하는 MICA/MILA 키트 핸즈온입니다."
+  },
+
+  // ==========================================
+  // [골이식재 & 멤브레인(재생 재료)]
+  // ==========================================
+  {
+    id: 6008,
+    category: "장비 및 재료·재생",
+    title: "메가젠 일타강사│완벽한 핸들링 흡수성 콜라겐 멤브레인 (Meg-CoL Soft type)",
+    desc: "우수한 인장 강도와 다발성 섬유 벌집 구조로 상피세포를 차단하고 신생골 형성을 돕는 차폐막",
+    duration: "01:27",
+    status: "active",
+    isPinned: false,
+    isNew: true,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/_N0XT6NL_hA",
+    thumbUrl: "https://img.youtube.com/vi/_N0XT6NL_hA/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/N0XT6NL_hA",
+    shareMsg: "원장님, 수화 시 뛰어난 유연성과 인장 강도로 찢어짐 없이 핸들링 가능한 Meg-CoL 차폐막 영상입니다."
+  },
+  {
+    id: 6009,
+    category: "장비 및 재료·재생",
+    title: "LT6 Resorbable i-Gen 흡수성 3D 프리쉐이프 멤브레인",
+    desc: "3D 프린팅 맞춤형 형태 유지력과 6개월 이상 장기 유지로 2차 수술 부담을 없앤 차세대 흡수성 차폐막",
+    duration: "02:20",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/mmE__prSry8",
+    thumbUrl: "https://img.youtube.com/vi/mmE__prSry8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/mmE__prSry8",
+    shareMsg: "원장님, 비흡수성의 공간 유지력과 흡수성의 편리함을 결합한 LT6 i-Gen 3D 차폐막 소개 영상입니다."
+  },
+  {
+    id: 6010,
+    category: "장비 및 재료·재생",
+    title: "Auto-Max™ 자가골 채취용 오토 하베스터 (Autogenous Bone Harvester)",
+    desc: "골 손실 없이 이상적인 파티클 크기의 자가골을 체어사이드에서 신속하게 채취하는 기구",
+    duration: "00:37",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/g0rlTtDz14E",
+    thumbUrl: "https://img.youtube.com/vi/g0rlTtDz14E/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/g0rlTtDz14E",
+    shareMsg: "원장님, GBR 시 신선한 자가골을 간편하고 안전하게 모아주는 Auto-Max 채취 기구 영상 전달드립니다."
   }
 ];
