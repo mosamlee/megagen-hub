@@ -1,10 +1,8 @@
 /**
- * MEGAGEN 국내영업 비디오 허브 - 썸네일 검증 완료 실제 영상 DB (videos-data.js)
+ * MEGAGEN 국내영업 비디오 허브 - 전체 영상 DB (videos-data.js)
  */
 const initialVideos = [
-  // ==========================================
   // 1. 임플란트 솔루션 (신제품 포함)
-  // ==========================================
   {
     id: 1001,
     category: "임플란트 솔루션",
@@ -48,9 +46,7 @@ const initialVideos = [
     shareMsg: "원장님, 불량 골질 케이스에서 발군의 고정력을 보여주는 AnyRidge 임상 영상입니다."
   },
 
-  // ==========================================
   // 2. 디지털 솔루션
-  // ==========================================
   {
     id: 2001,
     category: "디지털 솔루션",
@@ -80,9 +76,7 @@ const initialVideos = [
     shareMsg: "원장님, 페이스스캔을 통한 직관적인 보철 상담 솔루션 R2 Studio Q 영상입니다."
   },
 
-  // ==========================================
   // 3. 바이오레이즈 솔루션
-  // ==========================================
   {
     id: 3001,
     category: "바이오레이즈 솔루션",
@@ -93,4 +87,24 @@ const initialVideos = [
     isNew: false,
     isVisible: true,
     videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso",
-    thumbUrl:
+    thumbUrl: "https://img.youtube.com/vi/L_LUpnjgPso/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/L_LUpnjgPso",
+    shareMsg: "원장님, 임플란트 주위염 및 최소침습 연조직 치료에 특화된 Waterlase 영상입니다."
+  },
+
+  // 4. 장비 및 재료·재생
+  {
+    id: 4001,
+    category: "장비 및 재료·재생",
+    title: "아르테오(Arteo) 유니트 체어 3면 배수 & 감염 관리",
+    desc: "역류 방지 3면 배수 구조와 진료 피로도를 낮추는 인체공학적 설계",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/JGwWNGJdvx8",
+    thumbUrl: "https://img.youtube.com/vi/JGwWNGJdvx8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/JGwWNGJdvx8",
+    shareMsg: "원장님, 감염 관리와 진료실 위생에 최적화된 아르테오 체어 영상 전달드립니다."
+  }
+];
