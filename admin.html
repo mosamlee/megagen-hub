@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MEGAGEN 관리자 센터</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 영상 원본 데이터셋 연결 -->
+  <script src="videos-data.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
@@ -193,56 +195,14 @@
     ];
 
     let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
-    let categories = [];
-    if (!savedCats) {
-      categories = defaultRawCategories;
-    } else {
-      categories = savedCats.map(c => {
-        if (typeof c === 'string') return { name: c, isVisible: true };
-        return { name: c.name, isVisible: c.isVisible !== false };
-      });
-    }
-
-    let savedVideos = JSON.parse(localStorage.getItem('megagen_videos'));
-    let videos = [];
-    if (!savedVideos) {
-      videos = [
-        {
-          id: 1,
-          category: "임플란트 솔루션",
-          title: "ARi 전치부 식립 솔루션 런칭",
-          desc: "치조골 흡수가 심한 전치부 극복을 위한 특화 프로토콜",
-          status: "active",
-          isPinned: true,
-          isNew: true,
-          isVisible: true,
-          videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-          thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
-          downloadUrl: "https://youtu.be/GpXyohF9GxY",
-          shareMsg: "원장님, 문의주신 ARi 전치부 식립 솔루션 영상 공유드립니다. 진료 및 상담에 도움 되시길 바랍니다."
-        },
-        {
-          id: 2,
-          category: "디지털 솔루션",
-          title: "R2i5 구강스캐너 실시간 핸즈온",
-          desc: "초고속 무치악 스캔 및 직관적인 디지털 워크플로우",
-          status: "active",
-          isPinned: false,
-          isNew: true,
-          isVisible: true,
-          videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-          thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
-          downloadUrl: "https://youtu.be/GpXyohF9GxY",
-          shareMsg: "원장님, 문의주신 R2i5 구강스캐너 실시간 핸즈온 영상 공유드립니다. 진료 및 상담에 도움 되시길 바랍니다."
-        }
-      ];
-    } else {
-      videos = savedVideos.map(v => ({
-        ...v,
-        isNew: v.isNew === true,
-        isVisible: v.isVisible !== false
-      }));
-    }
+   const defaultRawCategories = [
+    { name: "신제품", isVisible: true },
+    { name: "임플란트 솔루션", isVisible: true },
+    { name: "디지털 솔루션", isVisible: true },
+    { name: "바이오레이즈 솔루션", isVisible: true },
+    { name: "엔도 솔루션", isVisible: true },
+    { name: "장비 및 재료·재생", isVisible: true }
+  ];
 
     // 유튜브 URL 추출 헬퍼
     function getYouTubeInfo(url) {
