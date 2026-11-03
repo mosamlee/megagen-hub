@@ -258,5 +258,168 @@ const initialVideos = [
     thumbUrl: "https://img.youtube.com/vi/2e0K9rLcx_o/hqdefault.jpg",
     downloadUrl: "https://youtu.be/2e0K9rLcx_o",
     shareMsg: "원장님, Root Membrane Kit의 핵심 장점을 30초로 정리한 요약 영상 전달드립니다."
+  },
+  // ========================================================
+  // 03. 바이오레이즈 솔루션 (BIOLASE & Waterlase)
+  // ========================================================
+
+  // --- [1] 클리니컬 임상 프로토콜 (Clinical Protocols) ---
+  {
+    id: 4001,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] Clinical Protocol Video - crown removal",
+    desc: "물방울레이저를 활용해 지주치 손상 없이 보철물 본딩제만 분리하는 크라운 제거 프로토콜",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/UXMpwJBNNNA",
+    thumbUrl: "https://img.youtube.com/vi/UXMpwJBNNNA/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/UXMpwJBNNNA",
+    shareMsg: "원장님, 버(Bur) 삭제 없이 보철 본딩제만 분리하여 치질을 보존하는 워터레이즈 크라운 제거 프로토콜 영상입니다."
+  },
+  {
+    id: 4002,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] Clinical Protocol Video - Veneer Removal",
+    desc: "치아 손상 없이 라미네이트·베니어만 1~3분 내로 신속하고 안전하게 제거하는 임상 프로토콜",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/0zoU_VVlFcg",
+    thumbUrl: "https://img.youtube.com/vi/0zoU_VVlFcg/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/0zoU_VVlFcg",
+    shareMsg: "원장님, 자연치 손상 없이 베니어만 깔끔하게 디본딩(De-bonding)하는 워터레이즈 임상 가이드 공유드립니다."
+  },
+  {
+    id: 4003,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] Clinical Protocol Video - Periodontitis",
+    desc: "무절개로 출혈과 통증을 줄이고 치주낭 내 염증 조직 및 세균을 제거하는 치주염 치료 프로토콜",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/di-9LKU-Xj8",
+    thumbUrl: "https://img.youtube.com/vi/di-9LKU-Xj8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/di-9LKU-Xj8",
+    shareMsg: "원장님, 무절개 최소침습으로 치주조직 재생을 유도하는 워터레이즈 치주염 치료(REPAIR Perio) 프로토콜입니다."
+  },
+  {
+    id: 4004,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] Clinical Protocol Video - Fibroma Removal",
+    desc: "봉합(Suture) 없이 레이저 마취부터 절제 및 Laser Bandage까지 원스톱으로 마치는 섬유종 제거",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/rI90LuRUJj0",
+    thumbUrl: "https://img.youtube.com/vi/rI90LuRUJj0/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/rI90LuRUJj0",
+    shareMsg: "원장님, 봉합 부담 없이 무출혈로 섬유종을 깔끔하게 절제하는 워터레이즈 연조직 수술 프로토콜 영상입니다."
+  },
+  {
+    id: 4005,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] Clinical Protocol Video - Peri Implantitis",
+    desc: "티타늄 나사산 손상 없이 비접촉 세정 및 감염 조직 제거를 실현하는 임플란트 주위염 처치",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/oaY5PYkLFf8",
+    thumbUrl: "https://img.youtube.com/vi/oaY5PYkLFf8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/oaY5PYkLFf8",
+    shareMsg: "원장님, 임플란트 표면 손상 없이 염증 세균만 선택적으로 박리하는 Peri-implantitis 처치 프로토콜입니다."
+  },
+
+  // --- [2] 장비 세팅 및 공식 사용 가이드 (Equipment Guide) ---
+  {
+    id: 4006,
+    category: "바이오레이즈 솔루션",
+    title: "Waterlase iPlus 사용 가이드 (Full Guide)",
+    desc: "장비 트렁크 파이버 연결, 핸드피스 및 팁 체결, 수압/공기 프리셋 설정 및 유지관리법",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/Q97CVdzCybo",
+    thumbUrl: "https://img.youtube.com/vi/Q97CVdzCybo/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/Q97CVdzCybo",
+    shareMsg: "원장님, 플래그십 물방울레이저 Waterlase iPlus의 조작 및 임상 프리셋 설정 가이드입니다."
+  },
+  {
+    id: 4007,
+    category: "바이오레이즈 솔루션",
+    title: "Waterlase MD 사용 가이드 (Full Guide)",
+    desc: "워터레이즈 MD 기종의 파이버 체결, 팁 홀더 조작 및 증류수 세척 관리 공식 매뉴얼",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/eyQmPfO9JLw",
+    thumbUrl: "https://img.youtube.com/vi/eyQmPfO9JLw/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/eyQmPfO9JLw",
+    shareMsg: "원장님, Waterlase MD 기종의 기본 세팅 및 올바른 사용 프로토콜 매뉴얼 영상 공유드립니다."
+  },
+
+  // --- [3] 실제 유저 원장님 임상 인터뷰 (KOL Review) ---
+  {
+    id: 4008,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] 물방울 레이저 유저 인터뷰 - 박정현 원장 (보아치과)",
+    desc: "2007년부터 3대를 도입해 사용 중인 장기 유저의 무출혈 연조직 성형 및 당일 레진 충전 노하우",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/jcdpdv061-0",
+    thumbUrl: "https://img.youtube.com/vi/jcdpdv061-0/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/jcdpdv061-0",
+    shareMsg: "원장님, 17년 이상 물방울레이저를 실제 진료에 적용해오신 박정현 원장님의 생생한 임상 인터뷰입니다."
+  },
+  {
+    id: 4009,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] 물방울 레이저 유저 인터뷰 - 최동주 원장 (라이프치과)",
+    desc: "20년 임상 경험자가 밝히는 치은절제술, 멜라닌 색소 제거 및 페리임플란타이티스 치료 효용성",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/Przk_TriQPg",
+    thumbUrl: "https://img.youtube.com/vi/Przk_TriQPg/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/Przk_TriQPg",
+    shareMsg: "원장님, 마취 부담을 줄이고 연조직 치료 예후를 극대화하는 최동주 원장님의 레이저 임상 리뷰입니다."
+  },
+  {
+    id: 4010,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] 물방울 레이저 유저 인터뷰 - 서종진 원장 (더밸런스치과)",
+    desc: "S모드 출혈 제어를 통한 전신질환자 수술 노하우 및 술후 통증을 줄여주는 Laser Bandage 술식",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/U2sqOkC27As",
+    thumbUrl: "https://img.youtube.com/vi/U2sqOkC27As/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/U2sqOkC27As",
+    shareMsg: "원장님, 고혈압·당뇨 환자 출혈 제어와 발치 후 통증 경감에 탁월한 레이저 밴디지 테크닉 영상입니다."
+  },
+  {
+    id: 4011,
+    category: "바이오레이즈 솔루션",
+    title: "[BIOLASE] 물방울 레이저 유저 인터뷰 - 김정혜 교수 (삼성서울병원)",
+    desc: "치주과 전문의가 바라본 메스(Blade)의 한계 극복, 무마취 치주 처치 및 술자 시야 확보의 강점",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/FSXQtM9yhgs",
+    thumbUrl: "https://img.youtube.com/vi/FSXQtM9yhgs/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/FSXQtM9yhgs",
+    shareMsg: "원장님, 치주과 전문의 관점에서 본 물방울레이저의 임상적 차별성과 지혈 효과 인터뷰입니다."
   }
 ];
