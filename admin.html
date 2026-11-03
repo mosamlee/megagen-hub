@@ -256,12 +256,13 @@
       return { embedUrl: url, thumbUrl: "" };
     }
 
-    // 관리자 인증 로직
+   // 1. 관리자 인증 로직 (로그인 성공 시 상태 저장)
     function verifyLogin() {
       const entered = document.getElementById('adminPasswordInput').value;
       const storedPw = localStorage.getItem('megagen_admin_pw') || "1234";
 
       if (entered === storedPw) {
+        localStorage.setItem('megagen_admin_logged', 'true'); // 로그인 유지 플래그 저장
         document.getElementById('authContainer').classList.add('hidden');
         document.getElementById('dashboardContainer').classList.remove('hidden');
         switchTab('videos');
@@ -270,22 +271,20 @@
       }
     }
 
+    // 2. 로그아웃 로직 (상태 삭제 후 새로고침)
     function handleLogout() {
+      localStorage.removeItem('megagen_admin_logged');
       location.reload();
     }
 
-    function changePassword() {
-      const currentPw = localStorage.getItem('megagen_admin_pw') || "1234";
-      const checkPw = prompt("현재 비밀번호를 입력하세요:");
-      if (checkPw !== currentPw) {
-        if (checkPw !== null) alert("현재 비밀번호가 일치하지 않습니다.");
-        return;
-      }
-
-      const newPw = prompt("새로운 비밀번호를 입력하세요:");
-      if (newPw && newPw.trim().length > 0) {
-        localStorage.setItem('megagen_admin_pw', newPw.trim());
-        alert("비밀번호가 성공적으로 변경되었습니다.");
+    // 3. 페이지 접속 시 로그인 유지 상태 자동 확인
+    function checkLoginStatus() {
+      if (localStorage.getItem('megagen_admin_logged') === 'true') {
+        const auth = document.getElementById('authContainer');
+        const dash = document.getElementById('dashboardContainer');
+        if (auth) auth.classList.add('hidden');
+        if (dash) dash.classList.remove('hidden');
+        switchTab('videos');
       }
     }
 
