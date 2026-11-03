@@ -1,5 +1,5 @@
 /**
- * MEGAGEN 국내영업 비디오 허브 - 실제 검증된 메가젠 공식 영상 DB (videos-data.js)
+ * MEGAGEN 국내영업 비디오 허브 - 4개 채널 통합 영상 DB (videos-data.js)
  */
 const initialVideos = [
   // ==========================================
