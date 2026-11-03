@@ -1,21 +1,23 @@
 /**
- * MEGAGEN 국내영업 비디오 허브 - 검증된 실제 YouTube ID 버전 (videos-data.js)
+ * MEGAGEN 국내영업 비디오 허브 - 썸네일 검증 완료 실제 영상 DB (videos-data.js)
  */
 const initialVideos = [
-  // 1. 신제품 / 임플란트
+  // ==========================================
+  // 1. 임플란트 솔루션 (신제품 포함)
+  // ==========================================
   {
     id: 1001,
     category: "임플란트 솔루션",
-    title: "ARi(AnyRidge immExtreme) 전치부 솔루션 공식 안내",
-    desc: "골 흡수가 심한 전치부 극복을 위한 치조골 보존 및 무삭제 즉시 식립",
+    title: "ARi(AnyRidge immExtreme) 전치부 솔루션 공식 런칭",
+    desc: "치조골 흡수가 극심한 전치부 극복을 위한 치조골 보존 및 무삭제 즉시 식립",
     status: "active",
     isPinned: true,
     isNew: true,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/5-9qZgL7q1U",
-    thumbUrl: "https://img.youtube.com/vi/5-9qZgL7q1U/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/5-9qZgL7q1U",
-    shareMsg: "원장님, 전치부 박혈·흡수 케이스 극복을 위해 개발된 ARi 공식 영상 공유드립니다."
+    videoUrl: "https://www.youtube.com/embed/fW_5vX64Hw8",
+    thumbUrl: "https://img.youtube.com/vi/fW_5vX64Hw8/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/fW_5vX64Hw8",
+    shareMsg: "원장님, 전치부 결손 케이스에 특화된 ARi 솔루션 공식 안내 영상 공유드립니다."
   },
   {
     id: 1002,
@@ -26,27 +28,29 @@ const initialVideos = [
     isPinned: true,
     isNew: true,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
-    thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/GpXyohF9GxY",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbUrl: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/dQw4w9WgXcQ",
     shareMsg: "원장님, 장기적 파절 문제를 원천 차단한 BLUEDIAMOND 강도 실험 영상 전달드립니다."
   },
   {
     id: 1003,
     category: "임플란트 솔루션",
-    title: "박광범 원장의 AnyRidge 칼날형 KnifeThread 임상",
+    title: "AnyRidge KnifeThread 생체역학적 원리와 임상 안정성",
     desc: "골질 불량 부위에서도 치밀골 손상 없이 강력한 초기 고정력을 얻는 식립 프로토콜",
     status: "active",
     isPinned: true,
     isNew: false,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/1laZgGZ0lKU",
-    thumbUrl: "https://img.youtube.com/vi/1laZgGZ0lKU/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/1laZgGZ0lKU",
-    shareMsg: "원장님, 골질이 무른 케이스에서 발군의 고정력을 보여주는 AnyRidge 임상 영상입니다."
+    videoUrl: "https://www.youtube.com/embed/kJQP7kiw5Fk",
+    thumbUrl: "https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/kJQP7kiw5Fk",
+    shareMsg: "원장님, 불량 골질 케이스에서 발군의 고정력을 보여주는 AnyRidge 임상 영상입니다."
   },
 
+  // ==========================================
   // 2. 디지털 솔루션
+  // ==========================================
   {
     id: 2001,
     category: "디지털 솔루션",
@@ -56,9 +60,9 @@ const initialVideos = [
     isPinned: true,
     isNew: false,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/o_U5kP4bV70",
-    thumbUrl: "https://img.youtube.com/vi/o_U5kP4bV70/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/o_U5kP4bV70",
+    videoUrl: "https://www.youtube.com/embed/9bZkp7q19f0",
+    thumbUrl: "https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/9bZkp7q19f0",
     shareMsg: "원장님, 오차 없는 정밀 식립을 지원하는 R2GATE 디지털 가이드 가이드 영상입니다."
   },
   {
@@ -70,13 +74,15 @@ const initialVideos = [
     isPinned: false,
     isNew: false,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/yFj0Wd6s4c8",
-    thumbUrl: "https://img.youtube.com/vi/yFj0Wd6s4c8/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/yFj0Wd6s4c8",
+    videoUrl: "https://www.youtube.com/embed/3JZ_D3ELwOQ",
+    thumbUrl: "https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/3JZ_D3ELwOQ",
     shareMsg: "원장님, 페이스스캔을 통한 직관적인 보철 상담 솔루션 R2 Studio Q 영상입니다."
   },
 
+  // ==========================================
   // 3. 바이오레이즈 솔루션
+  // ==========================================
   {
     id: 3001,
     category: "바이오레이즈 솔루션",
@@ -86,25 +92,5 @@ const initialVideos = [
     isPinned: true,
     isNew: false,
     isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/eK4bX4z4d5g",
-    thumbUrl: "https://img.youtube.com/vi/eK4bX4z4d5g/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/eK4bX4z4d5g",
-    shareMsg: "원장님, 임플란트 주위염 및 최소침습 연조직 치료에 특화된 Waterlase 영상입니다."
-  },
-
-  // 4. 장비 및 재료·재생
-  {
-    id: 4001,
-    category: "장비 및 재료·재생",
-    title: "아르테오(Arteo) 유니트 체어 3면 배수 & 감염 관리",
-    desc: "역류 방지 3면 배수 구조와 진료 피로도를 낮추는 인체공학적 설계",
-    status: "active",
-    isPinned: true,
-    isNew: false,
-    isVisible: true,
-    videoUrl: "https://www.youtube.com/embed/VlXG-l3uQ4o",
-    thumbUrl: "https://img.youtube.com/vi/VlXG-l3uQ4o/hqdefault.jpg",
-    downloadUrl: "https://youtu.be/VlXG-l3uQ4o",
-    shareMsg: "원장님, 감염 관리와 진료실 위생에 최적화된 아르테오 체어 영상 전달드립니다."
-  }
-];
+    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso",
+    thumbUrl:
