@@ -522,5 +522,106 @@ const initialVideos = [
     thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
     downloadUrl: "https://youtu.be/GpXyohF9GxY",
     shareMsg: "원장님, 치과와 기공소 간의 실시간 소통으로 보철 완성도를 극대화하는 스마트 덴탈 네트워크 영상입니다."
-  }
+  },
+  // ==========================================
+  // 01. 임플란트 솔루션 (Implant Solution)
+  // ==========================================
+  {
+    id: 2001,
+    category: "임플란트 솔루션",
+    title: "박광범의 임플란트 수술방│골질 불량 부위 KnifeThread 식립 라이브",
+    desc: "골질이 무른 D4 골질에서도 치밀골 손상 없이 탁월한 초기 고정력(ISQ)을 확보하는 실전 서저리",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/X75hKBrm5tQ",
+    thumbUrl: "https://img.youtube.com/vi/X75hKBrm5tQ/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/X75hKBrm5tQ",
+    shareMsg: "원장님, 불량 골질에서도 강력한 초기 고정을 얻을 수 있는 박광범 원장님의 AnyRidge 라이브 서저리 영상 공유드립니다."
+  },
+  {
+    id: 2002,
+    category: "임플란트 솔루션",
+    title: "AnyRidge 칼날형 KnifeThread의 생체역학적 원리와 임상 안정성",
+    desc: "해면골 압박 괴사를 방지하고 치밀골 접촉 면적을 극대화하여 조기 부하를 실현하는 특허 나사선 구조",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/kJQP7kiw5Fk",
+    thumbUrl: "https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/kJQP7kiw5Fk",
+    shareMsg: "원장님, AnyRidge만의 독보적인 칼날형 KnifeThread 생체역학 원리 및 장기 안정성 영상 전달드립니다."
+  },
+  {
+    id: 2003,
+    category: "임플란트 솔루션",
+    title: "BLUEDIAMOND IMPLANT 파절 제로 고강도 메커니즘 (DUO Surgical Kit)",
+    desc: "X-FIT 결합 구조와 순수 고강도 티타늄으로 장기적 피로 파절 위험을 원천 차단한 프리미엄 라인업",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/LY44u-UZlhM",
+    thumbUrl: "https://img.youtube.com/vi/LY44u-UZlhM/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/LY44u-UZlhM",
+    shareMsg: "원장님, 구치부 파절 걱정을 완벽히 해결한 고강도 블루다이아몬드 임플란트 핸즈온 영상 공유드립니다."
+  },
+  {
+    id: 2004,
+    category: "임플란트 솔루션",
+    title: "BLUEDIAMOND Implant Drilling Sequence (공식 식립 시퀀스)",
+    desc: "골질별 정확한 드릴링 깊이와 적정 토크 제어로 성공적인 골유착을 돕는 체어사이드 공식 매뉴얼",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/RIJXMn5r05I",
+    thumbUrl: "https://img.youtube.com/vi/RIJXMn5r05I/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/RIJXMn5r05I",
+    shareMsg: "원장님, 진료실 체어사이드에서 바로 적용 가능한 블루다이아몬드 공식 드릴링 시퀀스 가이드 영상입니다."
+  },
+  {
+    id: 2005,
+    category: "임플란트 솔루션",
+    title: "메가젠 일타강사│Socket A·B·C 한계 극복! Molar Immediate Kit #36, 37 Hands-On",
+    desc: "발치와 결손부의 한계를 넘어 협설측 치조골 흡수를 최소화하는 구치부 발치즉시 식립 프로토콜",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/fyXe4QPOrM4",
+    thumbUrl: "https://img.youtube.com/vi/fyXe4QPOrM4/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/fyXe4QPOrM4",
+    shareMsg: "원장님, 난이도 높은 구치부 발치즉시 식립의 성공률을 높여주는 Molar Immediate Kit 실전 핸즈온 영상입니다."
+  },
+  {
+    id: 2006,
+    category: "임플란트 솔루션",
+    title: "Molar Immediate 구치부 발치즉시 식립과 연조직 프로토콜 (BD Cuff)",
+    desc: "Crestal Bone Loss 제로를 지향하며 연조직 두께별 커프 선택으로 심미적인 치은 프로파일 형성",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/lcJWyCUGX-Y",
+    thumbUrl: "https://img.youtube.com/vi/lcJWyCUGX-Y/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/lcJWyCUGX-Y",
+    shareMsg: "원장님, 잇몸 퇴축 방지와 이상적인 보철 출현 윤곽을 완성하는 BD Cuff 연조직 솔루션 영상입니다."
+  },
+  {
+    id: 2007,
+    category: "임플란트 솔루션",
+    title: "메가젠 일타강사│어버트먼트 스크루 파절 응급 처치 노하우 (체어타임 단축)",
+    desc: "원장님들이 가장 난감해하는 나사 파절 상황 시 전용 리무버 키트를 이용해 3분 내 안전 제거하는 원포인트 팁",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/jQWOz_BrnHY",
+    thumbUrl: "https://img.youtube.com/vi/jQWOz_BrnHY/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/jQWOz_BrnHY",
+    shareMsg: "원장님, 진료실 응급 상황 시 신속하고 안전하게 파절 스크루를 제거할 수 있는 3분 팁 영상 공유드립니다."
+  },
 ];
