@@ -93,6 +93,7 @@
 
   <script>
     const defaultRawCategories = [
+      { name: "전체", isVisible: true },
       { name: "신제품", isVisible: true },
       { name: "임플란트 솔루션", isVisible: true },
       { name: "디지털 솔루션", isVisible: true },
@@ -126,14 +127,25 @@
 
     function renderCategoryNav() {
       const nav = document.getElementById('categoryNav');
-      nav.innerHTML = `
-        <button onclick="filterCategory('전체')" class="category-btn ${currentCategory === '전체' ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-2.5 sm:pb-3.5 transition pt-2 sm:pt-3 whitespace-nowrap text-sm sm:text-lg" data-cat="전체">전체</button>
-      `;
+      if (!nav) return;
+      nav.innerHTML = "";
 
-      categories.filter(c => c.isVisible !== false).forEach(cat => {
+      // isVisible !== false 인 카테고리만 동적 노출 ('전체' 포함)
+      const visibleCategories = categories.filter(c => c.isVisible !== false);
+
+      // 현재 선택된 카테고리가 숨김 상태가 되었다면 첫 번째 노출 카테고리로 자동 전환
+      if (!visibleCategories.some(c => c.name === currentCategory)) {
+        currentCategory = visibleCategories.length > 0 ? visibleCategories[0].name : "전체";
+      }
+
+      visibleCategories.forEach(cat => {
         const isActive = currentCategory === cat.name;
         nav.innerHTML += `
-          <button onclick="filterCategory('${cat.name}')" class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900'} pb-2.5 sm:pb-3.5 transition pt-2 sm:pt-3 whitespace-nowrap text-sm sm:text-lg" data-cat="${cat.name}">${cat.name}</button>
+          <button type="button" onclick="filterCategory('${cat.name}')" 
+            class="category-btn ${isActive ? 'text-sky-600 border-b-2 border-sky-600 font-bold' : 'text-slate-500 hover:text-slate-900 font-semibold'} pb-3.5 transition pt-2 sm:pt-3 whitespace-nowrap text-sm sm:text-lg" 
+            data-cat="${cat.name}">
+            ${cat.name}
+          </button>
         `;
       });
     }
