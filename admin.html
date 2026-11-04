@@ -205,7 +205,7 @@
 
   <script>
     // 기본 카테고리 정의
-    const defaultRawCategories = [
+     const defaultRawCategories = [
       { name: "전체", isVisible: true },
       { name: "신제품", isVisible: true },
       { name: "임플란트 솔루션", isVisible: true },
@@ -215,11 +215,16 @@
       { name: "장비 및 재료·재생", isVisible: true }
     ];
 
-    // 1. 카테고리 데이터 동기화
+    // 1. 카테고리 데이터 동기화 ('전체' 탭 강제 포함 보장)
     let savedCats = JSON.parse(localStorage.getItem('megagen_categories'));
     let categories = (savedCats && savedCats.length > 0)
       ? savedCats.map(c => typeof c === 'string' ? { name: c, isVisible: true } : { name: c.name, isVisible: c.isVisible !== false })
       : defaultRawCategories;
+
+    // 💡 기존 저장소에 '전체'가 빠져있다면 맨 앞에 자동으로 추가
+    if (!categories.some(c => c.name === "전체")) {
+      categories.unshift({ name: "전체", isVisible: true });
+    }
     localStorage.setItem('megagen_categories', JSON.stringify(categories));
 
     // 2. 영상 데이터 동기화 (0개면 videos-data.js의 initialVideos로 자동 로드)
