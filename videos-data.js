@@ -422,4 +422,105 @@ const initialVideos = [
     downloadUrl: "https://youtu.be/FSXQtM9yhgs",
     shareMsg: "원장님, 치주과 전문의 관점에서 본 물방울레이저의 임상적 차별성과 지혈 효과 인터뷰입니다."
   }
+  // ==========================================
+  // 02. 디지털 솔루션 (Digital Solution)
+  // ==========================================
+  {
+    id: 3001,
+    category: "디지털 솔루션",
+    title: "R2GATE 서지컬 가이드 시스템 & 프리패브 보철 풀 워크플로우",
+    desc: "CBCT 데이터와 구강 스캔 정합부터 모의 시술, 가이드 제작 및 즉시 임시보철 체결까지",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/ZdHbuOn2mTk",
+    thumbUrl: "https://img.youtube.com/vi/ZdHbuOn2mTk/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/ZdHbuOn2mTk",
+    shareMsg: "원장님, 오차 없는 정밀 식립과 당일 즉시 보철을 지원하는 R2GATE 풀 워크플로우 영상 공유드립니다."
+  },
+  {
+    id: 3002,
+    category: "디지털 솔루션",
+    title: "R2GATE Guided Surgical Kit for AnyRidge System",
+    desc: "골 손상과 과열을 방지하고 식립 정확도를 극대화하는 AnyRidge 전용 R2 가이드 드릴링 시퀀스",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/gPo8bNAONO0",
+    thumbUrl: "https://img.youtube.com/vi/gPo8bNAONO0/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/gPo8bNAONO0",
+    shareMsg: "원장님, AnyRidge 식립 시 안정성과 깊이 제어를 완벽히 지원하는 R2 가이드 서지컬 키트 요약 영상입니다."
+  },
+  {
+    id: 3003,
+    category: "디지털 솔루션",
+    title: "메가젠 일타강사│무치악 SRP 솔루션! 'AXA Scanbar'",
+    desc: "무치악 임플란트 식립 위치와 패스를 오차 없이 1분 만에 채득하는 혁신적 디지털 스캔 기법",
+    status: "active",
+    isPinned: true,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/q3lFnYZzqZw",
+    thumbUrl: "https://img.youtube.com/vi/q3lFnYZzqZw/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/q3lFnYZzqZw",
+    shareMsg: "원장님, 복잡한 무치악 풀아치 인상 채득의 체어타임을 획기적으로 줄여주는 AXA 솔루션 핸즈온 영상입니다."
+  },
+  {
+    id: 3004,
+    category: "디지털 솔루션",
+    title: "메가젠 일타강사│'AXA Scanbar' 체어사이드 실전 사용가이드",
+    desc: "진료실에서 원장님과 위생사가 바로 체결하고 스캔하는 2분 실전 체결 및 스캔 매뉴얼",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/cKjQOeI3epg",
+    thumbUrl: "https://img.youtube.com/vi/cKjQOeI3epg/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/cKjQOeI3epg",
+    shareMsg: "원장님, 진료실 체어사이드에서 바로 보고 따라 할 수 있는 AXA 2분 사용 가이드 영상입니다."
+  },
+  {
+    id: 3005,
+    category: "디지털 솔루션",
+    title: "R2 Studio Q 가상 환자 안면 스캔 솔루션 (Full Video)",
+    desc: "안면 3D 스캔과 치아 데이터를 결합해 턱관절과 스마일 라인 중심의 이상적인 가상 환자 구현",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/VPh5QYjC1Ck",
+    thumbUrl: "https://img.youtube.com/vi/VPh5QYjC1Ck/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/VPh5QYjC1Ck",
+    shareMsg: "원장님, 페이스 스캔을 통해 오차 없는 전치부 심미 보철 상담을 가능하게 하는 R2 Studio Q 영상입니다."
+  },
+  {
+    id: 3006,
+    category: "디지털 솔루션",
+    title: "R2i3 구강스캐너 & R2Playground 디지털 워크플로우",
+    desc: "초고속 실시간 스캔 엔진과 클라우드 기반 치과-기공 연동으로 체어타임 최적화",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/z7sUgjlNlXE",
+    thumbUrl: "https://img.youtube.com/vi/z7sUgjlNlXE/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/z7sUgjlNlXE",
+    shareMsg: "원장님, 왜곡 없는 정밀도와 속도를 갖춘 R2i3 구강스캐너 및 R2Playground 워크플로우 소개 영상입니다."
+  },
+  {
+    id: 3007,
+    category: "디지털 솔루션",
+    title: "SMART DENTAL NETWORK (치과-기공소 핑퐁 솔루션)",
+    desc: "구강스캔 데이터 기반 실시간 소통으로 보철 수정 및 리메이크를 최소화하는 협업 플랫폼",
+    status: "active",
+    isPinned: false,
+    isNew: false,
+    isVisible: true,
+    videoUrl: "https://www.youtube.com/embed/GpXyohF9GxY",
+    thumbUrl: "https://img.youtube.com/vi/GpXyohF9GxY/hqdefault.jpg",
+    downloadUrl: "https://youtu.be/GpXyohF9GxY",
+    shareMsg: "원장님, 치과와 기공소 간의 실시간 소통으로 보철 완성도를 극대화하는 스마트 덴탈 네트워크 영상입니다."
+  }
 ];
