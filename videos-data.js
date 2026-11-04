@@ -421,7 +421,7 @@ const initialVideos = [
     thumbUrl: "https://img.youtube.com/vi/FSXQtM9yhgs/hqdefault.jpg",
     downloadUrl: "https://youtu.be/FSXQtM9yhgs",
     shareMsg: "원장님, 치주과 전문의 관점에서 본 물방울레이저의 임상적 차별성과 지혈 효과 인터뷰입니다."
-  }
+  },
   // ==========================================
   // 02. 디지털 솔루션 (Digital Solution)
   // ==========================================
